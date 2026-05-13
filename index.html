@@ -15,6 +15,7 @@
       --paper-2:#f7f2ea;
       --ink:#1d1a17;
       --muted:#6d655e;
+      --muted-light:#938a82;
       --line:rgba(29,26,23,.12);
       --accent:#8b5e34;
       --accent-2:#31594d;
@@ -105,6 +106,7 @@
       box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 14px 24px rgba(139,94,52,.2);
       position:relative;
       overflow:hidden;
+      flex:0 0 auto;
     }
 
     .brand-mark::before,
@@ -117,6 +119,25 @@
     }
     .brand-mark::before{top:11px;width:22px;height:5px;transform:rotate(-16deg)}
     .brand-mark::after{top:22px;width:18px;height:5px;transform:rotate(15deg)}
+
+    .brand-text{
+      display:flex;
+      align-items:baseline;
+      gap:.55rem;
+      flex-wrap:wrap;
+      line-height:1;
+    }
+
+    .brand-name{
+      color:var(--ink);
+    }
+
+    .brand-version{
+      color:var(--muted-light);
+      font-weight:500;
+      font-size:.86rem;
+      letter-spacing:.04em;
+    }
 
     .nav-links{
       display:flex;
@@ -220,9 +241,33 @@
       width:34px;height:1px;background:currentColor;opacity:.7;
     }
 
+    .title-row{
+      display:flex;
+      align-items:baseline;
+      gap:.85rem;
+      flex-wrap:wrap;
+    }
+
     .hero h1{
       font-size:clamp(3rem, 8vw, 6.2rem);
       max-width:9.5ch;
+    }
+
+    .title-version{
+      color:var(--muted-light);
+      font-weight:500;
+      font-size:clamp(.9rem, 1.4vw, 1rem);
+      letter-spacing:.05em;
+      line-height:1.2;
+      transform:translateY(.15rem);
+    }
+
+    .hero-meta{
+      margin-top:.55rem;
+      color:var(--muted-light);
+      font-size:clamp(.92rem, 1.5vw, 1rem);
+      font-weight:500;
+      letter-spacing:.02em;
     }
 
     .hero p{
@@ -399,27 +444,29 @@
       backdrop-filter:blur(12px);
     }
 
-    .form-panel{
-      padding:1.15rem;
-      position:sticky;
-      top:92px;
+    .form-panel,
+    .tasks-panel{
+      padding:1.25rem;
     }
 
     .panel-head{
       display:flex;
       justify-content:space-between;
-      gap:1rem;
       align-items:end;
+      gap:1rem;
+      padding-bottom:1rem;
       margin-bottom:1rem;
+      border-bottom:1px solid var(--line);
     }
 
     .panel-head h2{
-      font-size:2.2rem;
+      font-size:clamp(2rem, 4vw, 3rem);
     }
 
     .panel-head p{
       color:var(--muted);
-      max-width:46ch;
+      font-size:.95rem;
+      max-width:34ch;
     }
 
     .form-grid{
@@ -432,241 +479,206 @@
       gap:.45rem;
     }
 
-    label{
-      font-size:.9rem;
+    .field label{
+      font-size:.84rem;
       font-weight:700;
-      color:#312b27;
+      color:var(--muted);
+      letter-spacing:.04em;
+      text-transform:uppercase;
     }
 
-    input, select, textarea{
+    .field input,
+    .field select,
+    .field textarea{
       width:100%;
       border:none;
       outline:none;
+      background:rgba(255,255,255,.7);
+      border:1px solid rgba(29,26,23,.08);
       border-radius:18px;
-      background:rgba(251,248,242,.85);
-      color:var(--ink);
       padding:1rem 1rem;
-      box-shadow: inset 0 0 0 1px rgba(29,26,23,.1);
-      transition:box-shadow .2s ease, transform .2s ease, background .2s ease;
+      color:var(--ink);
+      transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease;
     }
 
-    input:focus, select:focus, textarea:focus{
-      box-shadow: inset 0 0 0 2px rgba(49,89,77,.35), 0 0 0 6px rgba(49,89,77,.08);
-      background:#fffdfa;
-    }
-
-    textarea{
+    .field textarea{
       min-height:110px;
       resize:vertical;
     }
 
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus{
+      border-color:rgba(49,89,77,.35);
+      box-shadow:0 0 0 4px rgba(49,89,77,.08);
+      transform:translateY(-1px);
+    }
+
     .split{
       display:grid;
-      grid-template-columns:repeat(2, 1fr);
+      grid-template-columns:1fr 1fr;
       gap:.9rem;
     }
 
-    .actions{
+    .tasks-toolbar{
       display:flex;
       flex-wrap:wrap;
-      gap:.75rem;
-      margin-top:.25rem;
-    }
-
-    .hint{
-      font-size:.88rem;
-      color:var(--muted);
-    }
-
-    .board{
-      padding:1.15rem;
-    }
-
-    .board-top{
-      display:grid;
-      grid-template-columns:1fr auto;
-      gap:1rem;
-      align-items:end;
+      justify-content:space-between;
+      gap:.9rem;
       margin-bottom:1rem;
     }
 
     .filters{
       display:flex;
       flex-wrap:wrap;
-      gap:.65rem;
-      align-items:center;
-    }
-
-    .search{
-      min-width:min(100%, 280px);
-    }
-
-    .pills{
-      display:flex;
-      flex-wrap:wrap;
       gap:.55rem;
     }
 
-    .pill{
+    .filter-btn{
       border:none;
+      padding:.7rem .9rem;
       border-radius:999px;
-      padding:.7rem .95rem;
-      background:rgba(255,255,255,.7);
-      color:var(--muted);
+      background:rgba(255,255,255,.6);
       border:1px solid rgba(29,26,23,.08);
+      color:var(--muted);
       font-weight:700;
+      transition:all .2s ease;
     }
 
-    .pill.active{
+    .filter-btn:hover,
+    .filter-btn.active{
       background:var(--ink);
       color:#fff;
-      box-shadow:0 12px 24px rgba(29,26,23,.16);
+      transform:translateY(-1px);
     }
 
     .task-list{
       display:grid;
-      gap:.9rem;
-      min-height:220px;
+      gap:.85rem;
     }
 
-    .empty{
-      border:1px dashed rgba(29,26,23,.18);
-      border-radius:28px;
-      padding:2rem;
-      text-align:left;
-      color:var(--muted);
-      background:rgba(255,255,255,.34);
-    }
-
-    .task-card{
+    .task-item{
       display:grid;
       grid-template-columns:auto 1fr auto;
       gap:1rem;
       align-items:start;
       padding:1rem;
-      border-radius:24px;
-      background:rgba(251,248,242,.86);
+      border-radius:22px;
+      background:rgba(255,255,255,.65);
       border:1px solid rgba(29,26,23,.08);
-      transition:transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+      transition:transform .2s ease, box-shadow .25s ease, opacity .25s ease;
     }
 
-    .task-card:hover{
-      transform:translateY(-3px);
-      box-shadow:0 20px 34px rgba(40,28,18,.12);
-      border-color:rgba(139,94,52,.22);
+    .task-item:hover{
+      transform:translateY(-2px);
+      box-shadow:0 18px 32px rgba(40,28,18,.08);
     }
 
-    .task-card.done{
-      background:rgba(245,241,234,.8);
-    }
-
-    .task-card.done .task-title{
-      text-decoration:line-through;
-      color:#706861;
-    }
-
-    .check-btn{
-      width:26px;height:26px;
+    .task-check{
+      appearance:none;
+      width:22px;
+      height:22px;
       border-radius:50%;
+      margin-top:.2rem;
       border:2px solid var(--accent-2);
       background:transparent;
-      margin-top:.15rem;
-      position:relative;
+      display:grid;
+      place-items:center;
+      transition:all .2s ease;
+      cursor:pointer;
       flex:0 0 auto;
-      transition:all .22s ease;
     }
 
-    .task-card.done .check-btn{
+    .task-check:checked{
       background:var(--accent-2);
       box-shadow:0 8px 18px rgba(49,89,77,.2);
     }
 
-    .task-card.done .check-btn::after{
+    .task-check:checked::after{
       content:"";
-      position:absolute;
-      left:7px; top:3px;
-      width:6px;height:12px;
-      border:solid #fff;
-      border-width:0 2px 2px 0;
-      transform:rotate(45deg);
+      width:8px;height:8px;
+      border-radius:50%;
+      background:#fff;
     }
 
-    .task-main{
-      display:grid;
-      gap:.45rem;
+    .task-content h3{
+      font-size:1.7rem;
+      margin-bottom:.35rem;
     }
 
     .task-meta{
       display:flex;
       flex-wrap:wrap;
-      gap:.45rem;
+      gap:.5rem;
+      color:var(--muted);
+      font-size:.88rem;
+      margin-bottom:.45rem;
     }
 
-    .badge{
+    .pill{
       display:inline-flex;
       align-items:center;
       gap:.35rem;
-      padding:.38rem .7rem;
+      padding:.35rem .65rem;
       border-radius:999px;
-      border:1px solid rgba(29,26,23,.1);
-      background:rgba(255,255,255,.75);
-      color:#4c433d;
-      font-size:.78rem;
-      font-weight:800;
+      border:1px solid rgba(29,26,23,.08);
+      background:rgba(255,255,255,.7);
     }
 
-    .badge.subject{color:var(--accent-2)}
-    .badge.priority-high{color:var(--danger)}
-    .badge.priority-medium{color:var(--accent)}
-    .badge.priority-low{color:#6f7d57}
+    .priority-high{color:var(--danger)}
+    .priority-medium{color:var(--accent)}
+    .priority-low{color:var(--accent-2)}
 
-    .task-title{
-      font-size:1.25rem;
-      font-family:"Manrope", sans-serif;
-      font-weight:800;
-      line-height:1.18;
-    }
-
-    .task-desc{
+    .task-notes{
       color:var(--muted);
+      line-height:1.6;
       font-size:.94rem;
-      max-width:64ch;
     }
 
     .task-actions{
       display:flex;
-      flex-direction:column;
-      gap:.55rem;
+      gap:.5rem;
+      align-items:center;
     }
 
     .icon-btn{
-      width:40px;height:40px;
+      width:42px;height:42px;
       border:none;
       border-radius:14px;
-      display:grid;
-      place-items:center;
-      background:rgba(255,255,255,.72);
+      background:rgba(255,255,255,.75);
       border:1px solid rgba(29,26,23,.08);
       color:var(--ink);
-      transition:transform .2s ease, background .2s ease, color .2s ease;
+      font-size:1rem;
+      transition:transform .2s ease, background .2s ease;
     }
 
     .icon-btn:hover{
       transform:translateY(-2px);
-      background:var(--ink);
-      color:#fff;
+      background:#fff;
     }
 
-    .section-note{
-      margin-top:1rem;
-      color:var(--muted);
-      font-size:.9rem;
+    .task-item.completed{
+      opacity:.62;
     }
 
-    .footer{
-      padding:0 0 2rem;
+    .task-item.completed .task-content h3,
+    .task-item.completed .task-notes{
+      text-decoration:line-through;
+    }
+
+    .empty{
+      padding:2rem 1rem;
+      text-align:center;
       color:var(--muted);
-      font-size:.9rem;
+      border:1px dashed rgba(29,26,23,.16);
+      border-radius:22px;
+      background:rgba(255,255,255,.35);
+    }
+
+    footer{
+      padding:0 0 2.5rem;
+      color:var(--muted);
+      font-size:.92rem;
     }
 
     @keyframes rise{
@@ -674,32 +686,57 @@
       to{opacity:1;transform:translateY(0)}
     }
 
-    @media (max-width: 1020px){
+    @media (max-width: 980px){
       .hero-grid,
       .app-grid{
         grid-template-columns:1fr;
       }
-      .form-panel{
-        position:relative;
-        top:auto;
+
+      .hero-panel{
+        min-height:460px;
       }
     }
 
-    @media (max-width: 760px){
-      .nav-links{display:none}
-      .stats,
+    @media (max-width: 720px){
+      .nav{
+        min-height:auto;
+        padding:.9rem 0;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .nav-links{
+        width:100%;
+        justify-content:space-between;
+      }
+
       .split,
-      .board-top{
+      .stats{
         grid-template-columns:1fr;
       }
-      .hero-panel{min-height:500px}
-      .summary-shell{inset:.75rem}
-      .task-card{
+
+      .title-row{
+        gap:.45rem;
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .title-version{
+        transform:none;
+      }
+
+      .task-item{
         grid-template-columns:auto 1fr;
       }
+
       .task-actions{
         grid-column:2;
-        flex-direction:row;
+      }
+
+      .brand-text{
+        flex-direction:column;
+        gap:.15rem;
+        align-items:flex-start;
       }
     }
   </style>
@@ -707,446 +744,373 @@
 <body>
   <header class="topbar">
     <div class="wrap nav">
-      <a class="brand" href="#top" style="text-decoration:none;color:inherit;">
-        <span class="brand-mark" aria-hidden="true"></span>
-        <span>Study Ledger</span>
-      </a>
-      <nav class="nav-links" aria-label="Primary navigation">
+      <div class="brand" aria-label="Study Ledger brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div class="brand-text">
+          <span class="brand-name">Study Ledger</span>
+          <span class="brand-version">v0.1.1 Beta</span>
+        </div>
+      </div>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#overview">Overview</a>
         <a href="#planner">Planner</a>
         <a href="#tasks">Tasks</a>
-        <a href="#summary">Summary</a>
       </nav>
-      <button class="btn btn-soft" id="clearAllTop" type="button">Clear all</button>
     </div>
   </header>
 
-  <main id="top">
-    <section class="hero">
+  <main>
+    <section class="hero" id="overview">
       <div class="wrap hero-grid">
         <div class="hero-copy reveal">
-          <div class="eyebrow">Homework and task planning app</div>
-          <h1>Keep every assignment in one calm place.</h1>
+          <div class="eyebrow">Homework & Focus Planner</div>
+
+          <div class="title-row">
+            <h1>Study Ledger</h1>
+            <span class="title-version">v0.1.1 Beta</span>
+          </div>
+
+          <div class="hero-meta">Developed by Harper Dobni</div>
+
           <p>
-            Add homework, projects, chores, and deadlines. Sort by priority, mark things done,
-            and keep your week from turning into a giant mental pile.
+            Capture assignments, organize deadlines, and keep your schoolwork moving with calm clarity.
+            A clean ledger-style planner for students who want structure without clutter.
           </p>
+
           <div class="hero-actions">
-            <a href="#planner" class="btn btn-primary">Add your first task</a>
-            <a href="#tasks" class="btn btn-soft">View task board</a>
+            <a href="#planner" class="btn btn-primary">Start Planning</a>
+            <a href="#tasks" class="btn btn-soft">View Tasks</a>
           </div>
         </div>
 
-        <aside class="hero-panel reveal" id="summary" aria-label="Overview panel">
-          <div class="shape a" aria-hidden="true"></div>
-          <div class="shape b" aria-hidden="true"></div>
-          <div class="shape c" aria-hidden="true"></div>
+        <div class="hero-panel reveal" aria-hidden="true">
+          <div class="shape a"></div>
+          <div class="shape b"></div>
+          <div class="shape c"></div>
 
           <div class="summary-shell">
             <div class="summary-top">
               <div>
-                <strong>Weekly Overview</strong>
-                <div style="color:var(--muted);font-size:.92rem;">A quick look at your workload.</div>
+                <strong>Weekly Study Summary</strong>
+                <p style="color:var(--muted);font-size:.92rem;">A grounded snapshot of what matters next.</p>
               </div>
-              <div class="summary-chip" id="todayLabel">Today</div>
+              <div class="summary-chip">On Track</div>
             </div>
 
             <div class="stats">
               <div class="stat">
-                <span>Total tasks</span>
-                <strong id="statTotal">0</strong>
-              </div>
-              <div class="stat">
-                <span>Due soon</span>
-                <strong id="statDue">0</strong>
+                <span>Due Soon</span>
+                <strong>4</strong>
               </div>
               <div class="stat">
                 <span>Completed</span>
-                <strong id="statDone">0</strong>
+                <strong>12</strong>
+              </div>
+              <div class="stat">
+                <span>Focus Score</span>
+                <strong>86</strong>
               </div>
             </div>
 
-            <div class="summary-list" id="miniPreview">
+            <div class="summary-list">
               <div class="mini-item">
-                <div class="mini-check" aria-hidden="true"></div>
+                <div class="mini-check"></div>
                 <div>
-                  <strong>Capture tasks fast</strong>
-                  <p>Add homework, due dates, and priority.</p>
+                  <strong>Biology worksheet</strong>
+                  <p>Review chapter notes and finish lab response.</p>
                 </div>
-                <div class="mini-tag">Start here</div>
+                <div class="mini-tag">High</div>
               </div>
+
               <div class="mini-item">
-                <div class="mini-check" aria-hidden="true"></div>
+                <div class="mini-check"></div>
                 <div>
-                  <strong>Filter what matters</strong>
-                  <p>View all, active, completed, or due soon.</p>
+                  <strong>History reading</strong>
+                  <p>Annotate pages 48–63 for tomorrow’s discussion.</p>
                 </div>
-                <div class="mini-tag">Organize</div>
+                <div class="mini-tag">Medium</div>
               </div>
+
               <div class="mini-item">
-                <div class="mini-check" aria-hidden="true"></div>
+                <div class="mini-check"></div>
                 <div>
-                  <strong>Reduce overwhelm</strong>
-                  <p>See your list clearly instead of holding it in your head.</p>
+                  <strong>Math practice set</strong>
+                  <p>Complete ten problems before evening review.</p>
                 </div>
-                <div class="mini-tag">Focus</div>
+                <div class="mini-tag">Low</div>
               </div>
             </div>
           </div>
-        </aside>
+        </div>
       </div>
     </section>
 
-    <section class="app">
+    <section class="app" id="planner">
       <div class="wrap app-grid">
-        <section class="panel form-panel reveal" id="planner" aria-labelledby="plannerTitle">
+        <section class="panel form-panel reveal" aria-labelledby="planner-title">
           <div class="panel-head">
             <div>
-              <h2 id="plannerTitle">Add a task</h2>
-              <p>Enter homework, chores, study goals, or anything you need to get done.</p>
+              <h2 id="planner-title">Add a Task</h2>
+              <p>Write it down once, then let your planner hold the mental load.</p>
             </div>
           </div>
 
-          <form id="taskForm" class="form-grid">
+          <form class="form-grid" id="taskForm">
             <div class="field">
-              <label for="title">Task title</label>
-              <input id="title" name="title" type="text" placeholder="Finish algebra worksheet" required />
-            </div>
-
-            <div class="field">
-              <label for="description">Notes</label>
-              <textarea id="description" name="description" placeholder="Add details, page numbers, or what to start with first."></textarea>
+              <label for="taskTitle">Title</label>
+              <input id="taskTitle" name="taskTitle" type="text" placeholder="e.g. Finish chemistry review" required />
             </div>
 
             <div class="split">
               <div class="field">
-                <label for="subject">Subject / category</label>
-                <input id="subject" name="subject" type="text" placeholder="Math, English, Chores..." />
+                <label for="taskSubject">Subject</label>
+                <input id="taskSubject" name="taskSubject" type="text" placeholder="e.g. Chemistry" required />
               </div>
 
               <div class="field">
-                <label for="dueDate">Due date</label>
-                <input id="dueDate" name="dueDate" type="date" />
+                <label for="taskDue">Due Date</label>
+                <input id="taskDue" name="taskDue" type="date" required />
               </div>
             </div>
 
             <div class="split">
               <div class="field">
-                <label for="priority">Priority</label>
-                <select id="priority" name="priority">
-                  <option value="high">High</option>
-                  <option value="medium" selected>Medium</option>
-                  <option value="low">Low</option>
+                <label for="taskPriority">Priority</label>
+                <select id="taskPriority" name="taskPriority">
+                  <option value="High">High</option>
+                  <option value="Medium" selected>Medium</option>
+                  <option value="Low">Low</option>
                 </select>
               </div>
 
               <div class="field">
-                <label for="type">Type</label>
-                <select id="type" name="type">
-                  <option value="homework">Homework</option>
-                  <option value="study">Study</option>
-                  <option value="project">Project</option>
-                  <option value="personal">Personal</option>
-                </select>
+                <label for="taskEstimate">Time Estimate</label>
+                <input id="taskEstimate" name="taskEstimate" type="text" placeholder="e.g. 45 min" />
               </div>
             </div>
 
-            <div class="actions">
-              <button class="btn btn-primary" type="submit">Save task</button>
-              <button class="btn btn-soft" type="reset">Reset form</button>
+            <div class="field">
+              <label for="taskNotes">Notes</label>
+              <textarea id="taskNotes" name="taskNotes" placeholder="Add details, reminders, or what to focus on first..."></textarea>
             </div>
-            <p class="hint">Tip: make your task title specific, like “Read pages 20–25” instead of “Study history.”</p>
+
+            <div style="display:flex; gap:.75rem; flex-wrap:wrap; margin-top:.35rem;">
+              <button type="submit" class="btn btn-primary">Save Task</button>
+              <button type="reset" class="btn btn-soft">Clear Form</button>
+            </div>
           </form>
         </section>
 
-        <section class="panel board reveal" id="tasks" aria-labelledby="tasksTitle">
-          <div class="board-top">
+        <section class="panel tasks-panel reveal" id="tasks" aria-labelledby="tasks-title">
+          <div class="panel-head">
             <div>
-              <h2 id="tasksTitle">Task board</h2>
-              <p style="color:var(--muted);max-width:52ch;">
-                Filter your list, search by keyword, and mark items complete as you finish them.
-              </p>
+              <h2 id="tasks-title">Task Ledger</h2>
+              <p>A living list of your assignments, arranged for steady progress.</p>
             </div>
-            <input class="search" id="searchInput" type="search" placeholder="Search tasks or subjects" aria-label="Search tasks" />
           </div>
 
-          <div class="filters">
-            <div class="pills" role="tablist" aria-label="Task filters">
-              <button class="pill active" data-filter="all" type="button">All</button>
-              <button class="pill" data-filter="active" type="button">Active</button>
-              <button class="pill" data-filter="done" type="button">Completed</button>
-              <button class="pill" data-filter="due-soon" type="button">Due soon</button>
+          <div class="tasks-toolbar">
+            <div class="filters" role="tablist" aria-label="Task filters">
+              <button class="filter-btn active" data-filter="all" type="button">All</button>
+              <button class="filter-btn" data-filter="High" type="button">High</button>
+              <button class="filter-btn" data-filter="Medium" type="button">Medium</button>
+              <button class="filter-btn" data-filter="Low" type="button">Low</button>
+              <button class="filter-btn" data-filter="completed" type="button">Completed</button>
             </div>
-            <button class="btn btn-danger" id="clearCompletedBtn" type="button">Remove completed</button>
           </div>
 
-          <div class="task-list" id="taskList" aria-live="polite"></div>
-          <p class="section-note">Your tasks are saved in your browser, so they stay here when you refresh.</p>
+          <div class="task-list" id="taskList">
+            <article class="task-item" data-priority="High" data-completed="false">
+              <input class="task-check" type="checkbox" aria-label="Mark Biology worksheet complete" />
+              <div class="task-content">
+                <h3>Biology worksheet</h3>
+                <div class="task-meta">
+                  <span class="pill">Biology</span>
+                  <span class="pill">Due: 2026-05-15</span>
+                  <span class="pill priority-high">High priority</span>
+                  <span class="pill">35 min</span>
+                </div>
+                <p class="task-notes">Finish the worksheet and review the lab diagram before class.</p>
+              </div>
+              <div class="task-actions">
+                <button class="icon-btn delete-btn" type="button" aria-label="Delete Biology worksheet">✕</button>
+              </div>
+            </article>
+
+            <article class="task-item" data-priority="Medium" data-completed="false">
+              <input class="task-check" type="checkbox" aria-label="Mark History reading complete" />
+              <div class="task-content">
+                <h3>History reading</h3>
+                <div class="task-meta">
+                  <span class="pill">History</span>
+                  <span class="pill">Due: 2026-05-16</span>
+                  <span class="pill priority-medium">Medium priority</span>
+                  <span class="pill">50 min</span>
+                </div>
+                <p class="task-notes">Read assigned pages and collect three discussion notes for tomorrow.</p>
+              </div>
+              <div class="task-actions">
+                <button class="icon-btn delete-btn" type="button" aria-label="Delete History reading">✕</button>
+              </div>
+            </article>
+
+            <article class="task-item" data-priority="Low" data-completed="false">
+              <input class="task-check" type="checkbox" aria-label="Mark Math practice set complete" />
+              <div class="task-content">
+                <h3>Math practice set</h3>
+                <div class="task-meta">
+                  <span class="pill">Math</span>
+                  <span class="pill">Due: 2026-05-18</span>
+                  <span class="pill priority-low">Low priority</span>
+                  <span class="pill">25 min</span>
+                </div>
+                <p class="task-notes">Complete ten review problems and check any missed steps carefully.</p>
+              </div>
+              <div class="task-actions">
+                <button class="icon-btn delete-btn" type="button" aria-label="Delete Math practice set">✕</button>
+              </div>
+            </article>
+          </div>
         </section>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap">Study Ledger — built to make your workload visible, sortable, and less stressful.</div>
+  <footer>
+    <div class="wrap">
+      Study Ledger — built for steady progress, lighter planning, and clearer school days.
+    </div>
   </footer>
 
   <script>
-    const taskForm = document.getElementById('taskForm');
-    const taskList = document.getElementById('taskList');
-    const searchInput = document.getElementById('searchInput');
-    const filterButtons = document.querySelectorAll('.pill');
-    const clearCompletedBtn = document.getElementById('clearCompletedBtn');
-    const clearAllTop = document.getElementById('clearAllTop');
-
-    const statTotal = document.getElementById('statTotal');
-    const statDue = document.getElementById('statDue');
-    const statDone = document.getElementById('statDone');
-    const miniPreview = document.getElementById('miniPreview');
-    const todayLabel = document.getElementById('todayLabel');
-
-    let tasks = JSON.parse(localStorage.getItem('study-ledger-tasks') || '[]');
-    let currentFilter = 'all';
-
     const revealEls = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-        if(entry.isIntersecting){
+        if (entry.isIntersecting) {
           entry.target.classList.add('visible');
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.12 });
+
     revealEls.forEach(el => observer.observe(el));
 
-    const now = new Date();
-    todayLabel.textContent = now.toLocaleDateString(undefined, { month:'short', day:'numeric' });
+    const taskForm = document.getElementById('taskForm');
+    const taskList = document.getElementById('taskList');
+    const filterButtons = document.querySelectorAll('.filter-btn');
 
-    function saveTasks(){
-      localStorage.setItem('study-ledger-tasks', JSON.stringify(tasks));
-    }
+    function attachTaskEvents(taskItem) {
+      const checkbox = taskItem.querySelector('.task-check');
+      const deleteBtn = taskItem.querySelector('.delete-btn');
 
-    function formatDate(dateStr){
-      if(!dateStr) return 'No due date';
-      const d = new Date(dateStr + 'T00:00:00');
-      return d.toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
-    }
+      checkbox.addEventListener('change', () => {
+        const completed = checkbox.checked;
+        taskItem.classList.toggle('completed', completed);
+        taskItem.dataset.completed = completed ? 'true' : 'false';
+        applyFilter(document.querySelector('.filter-btn.active')?.dataset.filter || 'all');
+      });
 
-    function isDueSoon(dateStr){
-      if(!dateStr) return false;
-      const today = new Date();
-      today.setHours(0,0,0,0);
-      const due = new Date(dateStr + 'T00:00:00');
-      const diff = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
-      return diff >= 0 && diff <= 3;
-    }
-
-    function getPriorityLabel(priority){
-      if(priority === 'high') return 'High priority';
-      if(priority === 'low') return 'Low priority';
-      return 'Medium priority';
-    }
-
-    function escapeHTML(str){
-      return String(str).replace(/[&<>"']/g, s => ({
-        '&':'&amp;',
-        '<':'&lt;',
-        '>':'&gt;',
-        '"':'&quot;',
-        "'":'&#39;'
-      }[s]));
-    }
-
-    function renderStats(){
-      statTotal.textContent = tasks.length;
-      statDone.textContent = tasks.filter(t => t.done).length;
-      statDue.textContent = tasks.filter(t => !t.done && isDueSoon(t.dueDate)).length;
-
-      const upcoming = tasks
-        .filter(t => !t.done)
-        .sort((a,b) => {
-          if(!a.dueDate && !b.dueDate) return 0;
-          if(!a.dueDate) return 1;
-          if(!b.dueDate) return -1;
-          return new Date(a.dueDate) - new Date(b.dueDate);
-        })
-        .slice(0,3);
-
-      if(upcoming.length === 0){
-        miniPreview.innerHTML = `
-          <div class="mini-item">
-            <div class="mini-check" aria-hidden="true"></div>
-            <div>
-              <strong>No upcoming tasks yet</strong>
-              <p>Add your first homework item to see it here.</p>
-            </div>
-            <div class="mini-tag">Clear slate</div>
-          </div>
-        `;
-        return;
-      }
-
-      miniPreview.innerHTML = upcoming.map(task => `
-        <div class="mini-item">
-          <div class="mini-check" aria-hidden="true"></div>
-          <div>
-            <strong>${escapeHTML(task.title)}</strong>
-            <p>${task.dueDate ? 'Due ' + formatDate(task.dueDate) : 'No due date'}</p>
-          </div>
-          <div class="mini-tag">${escapeHTML(task.subject || task.type)}</div>
-        </div>
-      `).join('');
-    }
-
-    function getFilteredTasks(){
-      const query = searchInput.value.trim().toLowerCase();
-
-      return tasks.filter(task => {
-        const matchesSearch =
-          task.title.toLowerCase().includes(query) ||
-          task.description.toLowerCase().includes(query) ||
-          task.subject.toLowerCase().includes(query) ||
-          task.type.toLowerCase().includes(query);
-
-        if(!matchesSearch) return false;
-
-        if(currentFilter === 'active') return !task.done;
-        if(currentFilter === 'done') return task.done;
-        if(currentFilter === 'due-soon') return !task.done && isDueSoon(task.dueDate);
-        return true;
-      }).sort((a,b) => {
-        if(a.done !== b.done) return a.done - b.done;
-        if(a.priority !== b.priority){
-          const order = { high:0, medium:1, low:2 };
-          return order[a.priority] - order[b.priority];
-        }
-        if(!a.dueDate && !b.dueDate) return b.createdAt - a.createdAt;
-        if(!a.dueDate) return 1;
-        if(!b.dueDate) return -1;
-        return new Date(a.dueDate) - new Date(b.dueDate);
+      deleteBtn.addEventListener('click', () => {
+        taskItem.style.transform = 'scale(.98)';
+        taskItem.style.opacity = '0';
+        setTimeout(() => taskItem.remove(), 180);
       });
     }
 
-    function renderTasks(){
-      const filtered = getFilteredTasks();
-
-      if(filtered.length === 0){
-        taskList.innerHTML = `
-          <div class="empty">
-            <h3 style="font-size:2rem;margin-bottom:.5rem;">Nothing here yet</h3>
-            <p>Add a task on the left, or change your filters if you’re looking for something specific.</p>
-          </div>
-        `;
-        renderStats();
-        return;
-      }
-
-      taskList.innerHTML = filtered.map(task => `
-        <article class="task-card ${task.done ? 'done' : ''}">
-          <button class="check-btn" type="button" aria-label="${task.done ? 'Mark as active' : 'Mark as completed'}" onclick="toggleTask('${task.id}')"></button>
-
-          <div class="task-main">
-            <div class="task-meta">
-              <span class="badge subject">${escapeHTML(task.subject || task.type)}</span>
-              <span class="badge priority-${task.priority}">${getPriorityLabel(task.priority)}</span>
-              <span class="badge">${escapeHTML(task.type)}</span>
-              <span class="badge">${formatDate(task.dueDate)}</span>
-            </div>
-            <div class="task-title">${escapeHTML(task.title)}</div>
-            ${task.description ? `<div class="task-desc">${escapeHTML(task.description)}</div>` : ''}
-          </div>
-
-          <div class="task-actions">
-            <button class="icon-btn" type="button" aria-label="Edit task" onclick="editTask('${task.id}')">✎</button>
-            <button class="icon-btn" type="button" aria-label="Delete task" onclick="deleteTask('${task.id}')">✕</button>
-          </div>
-        </article>
-      `).join('');
-
-      renderStats();
-    }
+    document.querySelectorAll('.task-item').forEach(attachTaskEvents);
 
     taskForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
-      const formData = new FormData(taskForm);
-      const title = (formData.get('title') || '').toString().trim();
-      if(!title) return;
+      const title = document.getElementById('taskTitle').value.trim();
+      const subject = document.getElementById('taskSubject').value.trim();
+      const due = document.getElementById('taskDue').value;
+      const priority = document.getElementById('taskPriority').value;
+      const estimate = document.getElementById('taskEstimate').value.trim() || '—';
+      const notes = document.getElementById('taskNotes').value.trim() || 'No additional notes added.';
 
-      const task = {
-        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
-        title,
-        description: (formData.get('description') || '').toString().trim(),
-        subject: (formData.get('subject') || '').toString().trim(),
-        dueDate: (formData.get('dueDate') || '').toString(),
-        priority: (formData.get('priority') || 'medium').toString(),
-        type: (formData.get('type') || 'homework').toString(),
-        done: false,
-        createdAt: Date.now()
-      };
+      const priorityClass =
+        priority === 'High' ? 'priority-high' :
+        priority === 'Medium' ? 'priority-medium' : 'priority-low';
 
-      tasks.unshift(task);
-      saveTasks();
+      const article = document.createElement('article');
+      article.className = 'task-item';
+      article.dataset.priority = priority;
+      article.dataset.completed = 'false';
+      article.innerHTML = `
+        <input class="task-check" type="checkbox" aria-label="Mark ${title} complete" />
+        <div class="task-content">
+          <h3>${escapeHtml(title)}</h3>
+          <div class="task-meta">
+            <span class="pill">${escapeHtml(subject)}</span>
+            <span class="pill">Due: ${escapeHtml(due)}</span>
+            <span class="pill ${priorityClass}">${escapeHtml(priority)} priority</span>
+            <span class="pill">${escapeHtml(estimate)}</span>
+          </div>
+          <p class="task-notes">${escapeHtml(notes)}</p>
+        </div>
+        <div class="task-actions">
+          <button class="icon-btn delete-btn" type="button" aria-label="Delete ${escapeHtml(title)}">✕</button>
+        </div>
+      `;
+
+      taskList.prepend(article);
+      attachTaskEvents(article);
       taskForm.reset();
-      document.getElementById('priority').value = 'medium';
-      document.getElementById('type').value = 'homework';
-      renderTasks();
+      applyFilter(document.querySelector('.filter-btn.active')?.dataset.filter || 'all');
     });
 
     filterButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         filterButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        currentFilter = btn.dataset.filter;
-        renderTasks();
+        applyFilter(btn.dataset.filter);
       });
     });
 
-    searchInput.addEventListener('input', renderTasks);
+    function applyFilter(filter) {
+      const items = taskList.querySelectorAll('.task-item');
+      items.forEach(item => {
+        const priority = item.dataset.priority;
+        const completed = item.dataset.completed === 'true';
 
-    clearCompletedBtn.addEventListener('click', () => {
-      tasks = tasks.filter(task => !task.done);
-      saveTasks();
-      renderTasks();
-    });
+        let show = false;
+        if (filter === 'all') show = true;
+        else if (filter === 'completed') show = completed;
+        else show = priority === filter && !completed;
 
-    clearAllTop.addEventListener('click', () => {
-      const confirmed = confirm('Delete all saved tasks?');
-      if(!confirmed) return;
-      tasks = [];
-      saveTasks();
-      renderTasks();
-    });
+        item.style.display = show ? 'grid' : 'none';
+      });
 
-    window.toggleTask = function(id){
-      tasks = tasks.map(task => task.id === id ? { ...task, done: !task.done } : task);
-      saveTasks();
-      renderTasks();
+      updateEmptyState();
     }
 
-    window.deleteTask = function(id){
-      tasks = tasks.filter(task => task.id !== id);
-      saveTasks();
-      renderTasks();
+    function updateEmptyState() {
+      const existingEmpty = document.querySelector('.empty');
+      if (existingEmpty) existingEmpty.remove();
+
+      const visibleItems = [...taskList.querySelectorAll('.task-item')]
+        .filter(item => getComputedStyle(item).display !== 'none');
+
+      if (visibleItems.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'empty';
+        empty.textContent = 'No tasks match this view yet.';
+        taskList.appendChild(empty);
+      }
     }
 
-    window.editTask = function(id){
-      const task = tasks.find(t => t.id === id);
-      if(!task) return;
-
-      document.getElementById('title').value = task.title;
-      document.getElementById('description').value = task.description;
-      document.getElementById('subject').value = task.subject;
-      document.getElementById('dueDate').value = task.dueDate;
-      document.getElementById('priority').value = task.priority;
-      document.getElementById('type').value = task.type;
-
-      tasks = tasks.filter(t => t.id !== id);
-      saveTasks();
-      renderTasks();
-      document.getElementById('planner').scrollIntoView({ behavior:'smooth', block:'start' });
+    function escapeHtml(str) {
+      return str
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#039;');
     }
 
-    renderTasks();
+    applyFilter('all');
   </script>
 </body>
 </html>
