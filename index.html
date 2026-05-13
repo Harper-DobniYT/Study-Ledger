@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Study Ledger — Homework & Task Planner</title>
+  <meta name="description" content="A polished homework and task planning app to capture assignments, organize priorities, and stay focused." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f3efe8;
+      --paper:#fbf8f2;
+      --paper-2:#f7f2ea;
+      --ink:#1d1a17;
+      --muted:#6d655e;
+      --line:rgba(29,26,23,.12);
+      --accent:#8b5e34;
+      --accent-2:#31594d;
+      --accent-3:#d7b172;
+      --danger:#a74a3b;
+      --shadow:0 24px 60px rgba(40,28,18,.12);
+      --radius:26px;
+      --max:1240px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family:"Manrope", sans-serif;
+      background:
+        radial-gradient(circle at 8% 12%, rgba(215,177,114,.18), transparent 22%),
+        radial-gradient(circle at 90% 14%, rgba(49,89,77,.12), transparent 24%),
+        linear-gradient(180deg, #f6f2ea 0%, #efe8dc 100%);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      opacity:.24;
+      background-image:
+        linear-gradient(rgba(29,26,23,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(29,26,23,.03) 1px, transparent 1px);
+      background-size: 30px 30px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.65), transparent 96%);
+    }
+
+    h1,h2,h3,h4{
+      margin:0;
+      line-height:.96;
+      letter-spacing:-.03em;
+      font-family:"Cormorant Garamond", serif;
+    }
+
+    p{margin:0}
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+    .wrap{width:min(calc(100% - 2rem), var(--max));margin-inline:auto}
+
+    .reveal{
+      opacity:0;
+      transform:translateY(26px);
+      transition:opacity .8s ease, transform .8s ease;
+    }
+    .reveal.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:30;
+      backdrop-filter:blur(14px);
+      background:rgba(251,248,242,.72);
+      border-bottom:1px solid rgba(29,26,23,.08);
+    }
+
+    .nav{
+      min-height:74px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:1rem;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:.85rem;
+      font-weight:800;
+      letter-spacing:.03em;
+    }
+
+    .brand-mark{
+      width:44px;height:44px;border-radius:14px;
+      background:linear-gradient(135deg, var(--accent), var(--accent-3));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 14px 24px rgba(139,94,52,.2);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .brand-mark::before,
+    .brand-mark::after{
+      content:"";
+      position:absolute;
+      background:rgba(255,255,255,.82);
+      border-radius:999px;
+      left:10px;
+    }
+    .brand-mark::before{top:11px;width:22px;height:5px;transform:rotate(-16deg)}
+    .brand-mark::after{top:22px;width:18px;height:5px;transform:rotate(15deg)}
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:1.25rem;
+      color:var(--muted);
+      font-size:.95rem;
+    }
+    .nav-links a{
+      color:inherit;
+      text-decoration:none;
+      position:relative;
+      padding:.2rem 0;
+    }
+    .nav-links a::after{
+      content:"";
+      position:absolute;
+      left:0;bottom:-.08rem;
+      width:100%;height:1px;
+      background:var(--ink);
+      transform:scaleX(0);
+      transform-origin:right;
+      transition:transform .28s ease;
+    }
+    .nav-links a:hover::after{
+      transform:scaleX(1);
+      transform-origin:left;
+    }
+
+    .btn{
+      border:none;
+      border-radius:999px;
+      padding:.95rem 1.25rem;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.55rem;
+      transition:transform .2s ease, box-shadow .25s ease, background .25s ease, color .25s ease, border-color .25s ease;
+      will-change:transform;
+    }
+    .btn:active{transform:translateY(1px) scale(.99)}
+    .btn-primary{
+      background:var(--ink);
+      color:#fff;
+      box-shadow:0 16px 28px rgba(29,26,23,.18);
+    }
+    .btn-primary:hover{
+      transform:translateY(-2px);
+      background:#12100f;
+      box-shadow:0 22px 36px rgba(29,26,23,.22);
+    }
+    .btn-soft{
+      background:rgba(255,255,255,.56);
+      color:var(--ink);
+      border:1px solid rgba(29,26,23,.1);
+      backdrop-filter:blur(10px);
+    }
+    .btn-soft:hover{
+      transform:translateY(-2px);
+      background:rgba(255,255,255,.84);
+      box-shadow:var(--shadow);
+    }
+    .btn-danger{
+      background:rgba(167,74,59,.1);
+      color:var(--danger);
+      border:1px solid rgba(167,74,59,.14);
+    }
+    .btn-danger:hover{
+      transform:translateY(-2px);
+      background:rgba(167,74,59,.14);
+    }
+
+    .hero{
+      padding:clamp(1.75rem, 4vw, 3rem) 0 1.5rem;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.06fr .94fr;
+      gap:1.2rem;
+      align-items:stretch;
+    }
+
+    .hero-copy{
+      padding:clamp(1rem, 2vw, 1.8rem) 0;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:.55rem;
+      margin-bottom:1rem;
+      color:var(--accent-2);
+      font-size:.86rem;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-weight:800;
+    }
+    .eyebrow::before{
+      content:"";
+      width:34px;height:1px;background:currentColor;opacity:.7;
+    }
+
+    .hero h1{
+      font-size:clamp(3rem, 8vw, 6.2rem);
+      max-width:9.5ch;
+    }
+
+    .hero p{
+      margin-top:1rem;
+      max-width:56ch;
+      color:var(--muted);
+      font-size:clamp(1rem, 1.8vw, 1.12rem);
+    }
+
+    .hero-actions{
+      margin-top:1.5rem;
+      display:flex;
+      flex-wrap:wrap;
+      gap:.85rem;
+    }
+
+    .hero-panel{
+      position:relative;
+      min-height:520px;
+      border-radius:36px;
+      overflow:hidden;
+      border:1px solid rgba(29,26,23,.08);
+      background:
+        linear-gradient(160deg, rgba(255,255,255,.76), rgba(255,255,255,.36)),
+        linear-gradient(135deg, rgba(215,177,114,.26), rgba(49,89,77,.14));
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+      isolation:isolate;
+    }
+
+    .shape{
+      position:absolute;
+      border-radius:50%;
+      opacity:.95;
+    }
+    .shape.a{
+      width:220px;height:220px;top:-40px;right:-20px;
+      background:radial-gradient(circle at 30% 30%, #f8ddb0, var(--accent));
+    }
+    .shape.b{
+      width:180px;height:180px;left:-50px;bottom:70px;
+      background:radial-gradient(circle at 30% 30%, #93b8af, var(--accent-2));
+    }
+    .shape.c{
+      width:110px;height:110px;right:54px;bottom:28px;
+      background:radial-gradient(circle at 30% 30%, #fff2c9, var(--accent-3));
+    }
+
+    .summary-shell{
+      position:absolute;
+      inset:1rem;
+      border-radius:28px;
+      background:rgba(251,248,242,.8);
+      border:1px solid rgba(29,26,23,.08);
+      backdrop-filter:blur(10px);
+      padding:1rem;
+      display:grid;
+      grid-template-rows:auto auto 1fr;
+      gap:1rem;
+    }
+
+    .summary-top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:1rem;
+      padding-bottom:.9rem;
+      border-bottom:1px solid var(--line);
+    }
+
+    .summary-top strong{
+      display:block;
+      font-size:1rem;
+    }
+
+    .summary-chip{
+      padding:.55rem .85rem;
+      border-radius:999px;
+      background:rgba(49,89,77,.1);
+      color:var(--accent-2);
+      font-size:.88rem;
+      font-weight:800;
+      border:1px solid rgba(49,89,77,.12);
+    }
+
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:.75rem;
+    }
+
+    .stat{
+      padding:1rem;
+      border-radius:20px;
+      background:rgba(255,255,255,.64);
+      border:1px solid rgba(29,26,23,.08);
+    }
+
+    .stat span{
+      display:block;
+      color:var(--muted);
+      font-size:.82rem;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      margin-bottom:.35rem;
+    }
+
+    .stat strong{
+      font-family:"Cormorant Garamond", serif;
+      font-size:2rem;
+    }
+
+    .summary-list{
+      display:grid;
+      gap:.75rem;
+      align-content:start;
+    }
+
+    .mini-item{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      gap:.75rem;
+      align-items:center;
+      padding:.9rem;
+      border-radius:18px;
+      background:rgba(255,255,255,.64);
+      border:1px solid rgba(29,26,23,.08);
+      transform:translateY(18px);
+      opacity:0;
+      animation:rise .7s ease forwards;
+    }
+    .mini-item:nth-child(1){animation-delay:.18s}
+    .mini-item:nth-child(2){animation-delay:.34s}
+    .mini-item:nth-child(3){animation-delay:.5s}
+
+    .mini-check{
+      width:18px;height:18px;border-radius:50%;
+      border:2px solid var(--accent-2);
+    }
+
+    .mini-item p{
+      color:var(--muted);
+      font-size:.9rem;
+      margin:0;
+    }
+
+    .mini-tag{
+      padding:.35rem .65rem;
+      border-radius:999px;
+      background:rgba(139,94,52,.08);
+      border:1px solid rgba(139,94,52,.14);
+      color:var(--accent);
+      font-weight:700;
+      font-size:.76rem;
+      white-space:nowrap;
+    }
+
+    .app{
+      padding:1rem 0 4rem;
+    }
+
+    .app-grid{
+      display:grid;
+      grid-template-columns:.9fr 1.1fr;
+      gap:1.2rem;
+      align-items:start;
+    }
+
+    .panel{
+      border-radius:32px;
+      background:linear-gradient(180deg, rgba(255,255,255,.74), rgba(255,255,255,.48));
+      border:1px solid rgba(29,26,23,.08);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+    }
+
+    .form-panel{
+      padding:1.15rem;
+      position:sticky;
+      top:92px;
+    }
+
+    .panel-head{
+      display:flex;
+      justify-content:space-between;
+      gap:1rem;
+      align-items:end;
+      margin-bottom:1rem;
+    }
+
+    .panel-head h2{
+      font-size:2.2rem;
+    }
+
+    .panel-head p{
+      color:var(--muted);
+      max-width:46ch;
+    }
+
+    .form-grid{
+      display:grid;
+      gap:.9rem;
+    }
+
+    .field{
+      display:grid;
+      gap:.45rem;
+    }
+
+    label{
+      font-size:.9rem;
+      font-weight:700;
+      color:#312b27;
+    }
+
+    input, select, textarea{
+      width:100%;
+      border:none;
+      outline:none;
+      border-radius:18px;
+      background:rgba(251,248,242,.85);
+      color:var(--ink);
+      padding:1rem 1rem;
+      box-shadow: inset 0 0 0 1px rgba(29,26,23,.1);
+      transition:box-shadow .2s ease, transform .2s ease, background .2s ease;
+    }
+
+    input:focus, select:focus, textarea:focus{
+      box-shadow: inset 0 0 0 2px rgba(49,89,77,.35), 0 0 0 6px rgba(49,89,77,.08);
+      background:#fffdfa;
+    }
+
+    textarea{
+      min-height:110px;
+      resize:vertical;
+    }
+
+    .split{
+      display:grid;
+      grid-template-columns:repeat(2, 1fr);
+      gap:.9rem;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.75rem;
+      margin-top:.25rem;
+    }
+
+    .hint{
+      font-size:.88rem;
+      color:var(--muted);
+    }
+
+    .board{
+      padding:1.15rem;
+    }
+
+    .board-top{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:1rem;
+      align-items:end;
+      margin-bottom:1rem;
+    }
+
+    .filters{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.65rem;
+      align-items:center;
+    }
+
+    .search{
+      min-width:min(100%, 280px);
+    }
+
+    .pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.55rem;
+    }
+
+    .pill{
+      border:none;
+      border-radius:999px;
+      padding:.7rem .95rem;
+      background:rgba(255,255,255,.7);
+      color:var(--muted);
+      border:1px solid rgba(29,26,23,.08);
+      font-weight:700;
+    }
+
+    .pill.active{
+      background:var(--ink);
+      color:#fff;
+      box-shadow:0 12px 24px rgba(29,26,23,.16);
+    }
+
+    .task-list{
+      display:grid;
+      gap:.9rem;
+      min-height:220px;
+    }
+
+    .empty{
+      border:1px dashed rgba(29,26,23,.18);
+      border-radius:28px;
+      padding:2rem;
+      text-align:left;
+      color:var(--muted);
+      background:rgba(255,255,255,.34);
+    }
+
+    .task-card{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      gap:1rem;
+      align-items:start;
+      padding:1rem;
+      border-radius:24px;
+      background:rgba(251,248,242,.86);
+      border:1px solid rgba(29,26,23,.08);
+      transition:transform .25s ease, box-shadow .25s ease, background .25s ease, border-color .25s ease;
+    }
+
+    .task-card:hover{
+      transform:translateY(-3px);
+      box-shadow:0 20px 34px rgba(40,28,18,.12);
+      border-color:rgba(139,94,52,.22);
+    }
+
+    .task-card.done{
+      background:rgba(245,241,234,.8);
+    }
+
+    .task-card.done .task-title{
+      text-decoration:line-through;
+      color:#706861;
+    }
+
+    .check-btn{
+      width:26px;height:26px;
+      border-radius:50%;
+      border:2px solid var(--accent-2);
+      background:transparent;
+      margin-top:.15rem;
+      position:relative;
+      flex:0 0 auto;
+      transition:all .22s ease;
+    }
+
+    .task-card.done .check-btn{
+      background:var(--accent-2);
+      box-shadow:0 8px 18px rgba(49,89,77,.2);
+    }
+
+    .task-card.done .check-btn::after{
+      content:"";
+      position:absolute;
+      left:7px; top:3px;
+      width:6px;height:12px;
+      border:solid #fff;
+      border-width:0 2px 2px 0;
+      transform:rotate(45deg);
+    }
+
+    .task-main{
+      display:grid;
+      gap:.45rem;
+    }
+
+    .task-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.45rem;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:.35rem;
+      padding:.38rem .7rem;
+      border-radius:999px;
+      border:1px solid rgba(29,26,23,.1);
+      background:rgba(255,255,255,.75);
+      color:#4c433d;
+      font-size:.78rem;
+      font-weight:800;
+    }
+
+    .badge.subject{color:var(--accent-2)}
+    .badge.priority-high{color:var(--danger)}
+    .badge.priority-medium{color:var(--accent)}
+    .badge.priority-low{color:#6f7d57}
+
+    .task-title{
+      font-size:1.25rem;
+      font-family:"Manrope", sans-serif;
+      font-weight:800;
+      line-height:1.18;
+    }
+
+    .task-desc{
+      color:var(--muted);
+      font-size:.94rem;
+      max-width:64ch;
+    }
+
+    .task-actions{
+      display:flex;
+      flex-direction:column;
+      gap:.55rem;
+    }
+
+    .icon-btn{
+      width:40px;height:40px;
+      border:none;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(29,26,23,.08);
+      color:var(--ink);
+      transition:transform .2s ease, background .2s ease, color .2s ease;
+    }
+
+    .icon-btn:hover{
+      transform:translateY(-2px);
+      background:var(--ink);
+      color:#fff;
+    }
+
+    .section-note{
+      margin-top:1rem;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    .footer{
+      padding:0 0 2rem;
+      color:var(--muted);
+      font-size:.9rem;
+    }
+
+    @keyframes rise{
+      from{opacity:0;transform:translateY(18px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    @media (max-width: 1020px){
+      .hero-grid,
+      .app-grid{
+        grid-template-columns:1fr;
+      }
+      .form-panel{
+        position:relative;
+        top:auto;
+      }
+    }
+
+    @media (max-width: 760px){
+      .nav-links{display:none}
+      .stats,
+      .split,
+      .board-top{
+        grid-template-columns:1fr;
+      }
+      .hero-panel{min-height:500px}
+      .summary-shell{inset:.75rem}
+      .task-card{
+        grid-template-columns:auto 1fr;
+      }
+      .task-actions{
+        grid-column:2;
+        flex-direction:row;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <a class="brand" href="#top" style="text-decoration:none;color:inherit;">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>Study Ledger</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#planner">Planner</a>
+        <a href="#tasks">Tasks</a>
+        <a href="#summary">Summary</a>
+      </nav>
+      <button class="btn btn-soft" id="clearAllTop" type="button">Clear all</button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow">Homework and task planning app</div>
+          <h1>Keep every assignment in one calm place.</h1>
+          <p>
+            Add homework, projects, chores, and deadlines. Sort by priority, mark things done,
+            and keep your week from turning into a giant mental pile.
+          </p>
+          <div class="hero-actions">
+            <a href="#planner" class="btn btn-primary">Add your first task</a>
+            <a href="#tasks" class="btn btn-soft">View task board</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel reveal" id="summary" aria-label="Overview panel">
+          <div class="shape a" aria-hidden="true"></div>
+          <div class="shape b" aria-hidden="true"></div>
+          <div class="shape c" aria-hidden="true"></div>
+
+          <div class="summary-shell">
+            <div class="summary-top">
+              <div>
+                <strong>Weekly Overview</strong>
+                <div style="color:var(--muted);font-size:.92rem;">A quick look at your workload.</div>
+              </div>
+              <div class="summary-chip" id="todayLabel">Today</div>
+            </div>
+
+            <div class="stats">
+              <div class="stat">
+                <span>Total tasks</span>
+                <strong id="statTotal">0</strong>
+              </div>
+              <div class="stat">
+                <span>Due soon</span>
+                <strong id="statDue">0</strong>
+              </div>
+              <div class="stat">
+                <span>Completed</span>
+                <strong id="statDone">0</strong>
+              </div>
+            </div>
+
+            <div class="summary-list" id="miniPreview">
+              <div class="mini-item">
+                <div class="mini-check" aria-hidden="true"></div>
+                <div>
+                  <strong>Capture tasks fast</strong>
+                  <p>Add homework, due dates, and priority.</p>
+                </div>
+                <div class="mini-tag">Start here</div>
+              </div>
+              <div class="mini-item">
+                <div class="mini-check" aria-hidden="true"></div>
+                <div>
+                  <strong>Filter what matters</strong>
+                  <p>View all, active, completed, or due soon.</p>
+                </div>
+                <div class="mini-tag">Organize</div>
+              </div>
+              <div class="mini-item">
+                <div class="mini-check" aria-hidden="true"></div>
+                <div>
+                  <strong>Reduce overwhelm</strong>
+                  <p>See your list clearly instead of holding it in your head.</p>
+                </div>
+                <div class="mini-tag">Focus</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="app">
+      <div class="wrap app-grid">
+        <section class="panel form-panel reveal" id="planner" aria-labelledby="plannerTitle">
+          <div class="panel-head">
+            <div>
+              <h2 id="plannerTitle">Add a task</h2>
+              <p>Enter homework, chores, study goals, or anything you need to get done.</p>
+            </div>
+          </div>
+
+          <form id="taskForm" class="form-grid">
+            <div class="field">
+              <label for="title">Task title</label>
+              <input id="title" name="title" type="text" placeholder="Finish algebra worksheet" required />
+            </div>
+
+            <div class="field">
+              <label for="description">Notes</label>
+              <textarea id="description" name="description" placeholder="Add details, page numbers, or what to start with first."></textarea>
+            </div>
+
+            <div class="split">
+              <div class="field">
+                <label for="subject">Subject / category</label>
+                <input id="subject" name="subject" type="text" placeholder="Math, English, Chores..." />
+              </div>
+
+              <div class="field">
+                <label for="dueDate">Due date</label>
+                <input id="dueDate" name="dueDate" type="date" />
+              </div>
+            </div>
+
+            <div class="split">
+              <div class="field">
+                <label for="priority">Priority</label>
+                <select id="priority" name="priority">
+                  <option value="high">High</option>
+                  <option value="medium" selected>Medium</option>
+                  <option value="low">Low</option>
+                </select>
+              </div>
+
+              <div class="field">
+                <label for="type">Type</label>
+                <select id="type" name="type">
+                  <option value="homework">Homework</option>
+                  <option value="study">Study</option>
+                  <option value="project">Project</option>
+                  <option value="personal">Personal</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">Save task</button>
+              <button class="btn btn-soft" type="reset">Reset form</button>
+            </div>
+            <p class="hint">Tip: make your task title specific, like “Read pages 20–25” instead of “Study history.”</p>
+          </form>
+        </section>
+
+        <section class="panel board reveal" id="tasks" aria-labelledby="tasksTitle">
+          <div class="board-top">
+            <div>
+              <h2 id="tasksTitle">Task board</h2>
+              <p style="color:var(--muted);max-width:52ch;">
+                Filter your list, search by keyword, and mark items complete as you finish them.
+              </p>
+            </div>
+            <input class="search" id="searchInput" type="search" placeholder="Search tasks or subjects" aria-label="Search tasks" />
+          </div>
+
+          <div class="filters">
+            <div class="pills" role="tablist" aria-label="Task filters">
+              <button class="pill active" data-filter="all" type="button">All</button>
+              <button class="pill" data-filter="active" type="button">Active</button>
+              <button class="pill" data-filter="done" type="button">Completed</button>
+              <button class="pill" data-filter="due-soon" type="button">Due soon</button>
+            </div>
+            <button class="btn btn-danger" id="clearCompletedBtn" type="button">Remove completed</button>
+          </div>
+
+          <div class="task-list" id="taskList" aria-live="polite"></div>
+          <p class="section-note">Your tasks are saved in your browser, so they stay here when you refresh.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">Study Ledger — built to make your workload visible, sortable, and less stressful.</div>
+  </footer>
+
+  <script>
+    const taskForm = document.getElementById('taskForm');
+    const taskList = document.getElementById('taskList');
+    const searchInput = document.getElementById('searchInput');
+    const filterButtons = document.querySelectorAll('.pill');
+    const clearCompletedBtn = document.getElementById('clearCompletedBtn');
+    const clearAllTop = document.getElementById('clearAllTop');
+
+    const statTotal = document.getElementById('statTotal');
+    const statDue = document.getElementById('statDue');
+    const statDone = document.getElementById('statDone');
+    const miniPreview = document.getElementById('miniPreview');
+    const todayLabel = document.getElementById('todayLabel');
+
+    let tasks = JSON.parse(localStorage.getItem('study-ledger-tasks') || '[]');
+    let currentFilter = 'all';
+
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
+
+    const now = new Date();
+    todayLabel.textContent = now.toLocaleDateString(undefined, { month:'short', day:'numeric' });
+
+    function saveTasks(){
+      localStorage.setItem('study-ledger-tasks', JSON.stringify(tasks));
+    }
+
+    function formatDate(dateStr){
+      if(!dateStr) return 'No due date';
+      const d = new Date(dateStr + 'T00:00:00');
+      return d.toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
+    }
+
+    function isDueSoon(dateStr){
+      if(!dateStr) return false;
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const due = new Date(dateStr + 'T00:00:00');
+      const diff = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
+      return diff >= 0 && diff <= 3;
+    }
+
+    function getPriorityLabel(priority){
+      if(priority === 'high') return 'High priority';
+      if(priority === 'low') return 'Low priority';
+      return 'Medium priority';
+    }
+
+    function escapeHTML(str){
+      return String(str).replace(/[&<>"']/g, s => ({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#39;'
+      }[s]));
+    }
+
+    function renderStats(){
+      statTotal.textContent = tasks.length;
+      statDone.textContent = tasks.filter(t => t.done).length;
+      statDue.textContent = tasks.filter(t => !t.done && isDueSoon(t.dueDate)).length;
+
+      const upcoming = tasks
+        .filter(t => !t.done)
+        .sort((a,b) => {
+          if(!a.dueDate && !b.dueDate) return 0;
+          if(!a.dueDate) return 1;
+          if(!b.dueDate) return -1;
+          return new Date(a.dueDate) - new Date(b.dueDate);
+        })
+        .slice(0,3);
+
+      if(upcoming.length === 0){
+        miniPreview.innerHTML = `
+          <div class="mini-item">
+            <div class="mini-check" aria-hidden="true"></div>
+            <div>
+              <strong>No upcoming tasks yet</strong>
+              <p>Add your first homework item to see it here.</p>
+            </div>
+            <div class="mini-tag">Clear slate</div>
+          </div>
+        `;
+        return;
+      }
+
+      miniPreview.innerHTML = upcoming.map(task => `
+        <div class="mini-item">
+          <div class="mini-check" aria-hidden="true"></div>
+          <div>
+            <strong>${escapeHTML(task.title)}</strong>
+            <p>${task.dueDate ? 'Due ' + formatDate(task.dueDate) : 'No due date'}</p>
+          </div>
+          <div class="mini-tag">${escapeHTML(task.subject || task.type)}</div>
+        </div>
+      `).join('');
+    }
+
+    function getFilteredTasks(){
+      const query = searchInput.value.trim().toLowerCase();
+
+      return tasks.filter(task => {
+        const matchesSearch =
+          task.title.toLowerCase().includes(query) ||
+          task.description.toLowerCase().includes(query) ||
+          task.subject.toLowerCase().includes(query) ||
+          task.type.toLowerCase().includes(query);
+
+        if(!matchesSearch) return false;
+
+        if(currentFilter === 'active') return !task.done;
+        if(currentFilter === 'done') return task.done;
+        if(currentFilter === 'due-soon') return !task.done && isDueSoon(task.dueDate);
+        return true;
+      }).sort((a,b) => {
+        if(a.done !== b.done) return a.done - b.done;
+        if(a.priority !== b.priority){
+          const order = { high:0, medium:1, low:2 };
+          return order[a.priority] - order[b.priority];
+        }
+        if(!a.dueDate && !b.dueDate) return b.createdAt - a.createdAt;
+        if(!a.dueDate) return 1;
+        if(!b.dueDate) return -1;
+        return new Date(a.dueDate) - new Date(b.dueDate);
+      });
+    }
+
+    function renderTasks(){
+      const filtered = getFilteredTasks();
+
+      if(filtered.length === 0){
+        taskList.innerHTML = `
+          <div class="empty">
+            <h3 style="font-size:2rem;margin-bottom:.5rem;">Nothing here yet</h3>
+            <p>Add a task on the left, or change your filters if you’re looking for something specific.</p>
+          </div>
+        `;
+        renderStats();
+        return;
+      }
+
+      taskList.innerHTML = filtered.map(task => `
+        <article class="task-card ${task.done ? 'done' : ''}">
+          <button class="check-btn" type="button" aria-label="${task.done ? 'Mark as active' : 'Mark as completed'}" onclick="toggleTask('${task.id}')"></button>
+
+          <div class="task-main">
+            <div class="task-meta">
+              <span class="badge subject">${escapeHTML(task.subject || task.type)}</span>
+              <span class="badge priority-${task.priority}">${getPriorityLabel(task.priority)}</span>
+              <span class="badge">${escapeHTML(task.type)}</span>
+              <span class="badge">${formatDate(task.dueDate)}</span>
+            </div>
+            <div class="task-title">${escapeHTML(task.title)}</div>
+            ${task.description ? `<div class="task-desc">${escapeHTML(task.description)}</div>` : ''}
+          </div>
+
+          <div class="task-actions">
+            <button class="icon-btn" type="button" aria-label="Edit task" onclick="editTask('${task.id}')">✎</button>
+            <button class="icon-btn" type="button" aria-label="Delete task" onclick="deleteTask('${task.id}')">✕</button>
+          </div>
+        </article>
+      `).join('');
+
+      renderStats();
+    }
+
+    taskForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(taskForm);
+      const title = (formData.get('title') || '').toString().trim();
+      if(!title) return;
+
+      const task = {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+        title,
+        description: (formData.get('description') || '').toString().trim(),
+        subject: (formData.get('subject') || '').toString().trim(),
+        dueDate: (formData.get('dueDate') || '').toString(),
+        priority: (formData.get('priority') || 'medium').toString(),
+        type: (formData.get('type') || 'homework').toString(),
+        done: false,
+        createdAt: Date.now()
+      };
+
+      tasks.unshift(task);
+      saveTasks();
+      taskForm.reset();
+      document.getElementById('priority').value = 'medium';
+      document.getElementById('type').value = 'homework';
+      renderTasks();
+    });
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderTasks();
+      });
+    });
+
+    searchInput.addEventListener('input', renderTasks);
+
+    clearCompletedBtn.addEventListener('click', () => {
+      tasks = tasks.filter(task => !task.done);
+      saveTasks();
+      renderTasks();
+    });
+
+    clearAllTop.addEventListener('click', () => {
+      const confirmed = confirm('Delete all saved tasks?');
+      if(!confirmed) return;
+      tasks = [];
+      saveTasks();
+      renderTasks();
+    });
+
+    window.toggleTask = function(id){
+      tasks = tasks.map(task => task.id === id ? { ...task, done: !task.done } : task);
+      saveTasks();
+      renderTasks();
+    }
+
+    window.deleteTask = function(id){
+      tasks = tasks.filter(task => task.id !== id);
+      saveTasks();
+      renderTasks();
+    }
+
+    window.editTask = function(id){
+      const task = tasks.find(t => t.id === id);
+      if(!task) return;
+
+      document.getElementById('title').value = task.title;
+      document.getElementById('description').value = task.description;
+      document.getElementById('subject').value = task.subject;
+      document.getElementById('dueDate').value = task.dueDate;
+      document.getElementById('priority').value = task.priority;
+      document.getElementById('type').value = task.type;
+
+      tasks = tasks.filter(t => t.id !== id);
+      saveTasks();
+      renderTasks();
+      document.getElementById('planner').scrollIntoView({ behavior:'smooth', block:'start' });
+    }
+
+    renderTasks();
+  </script>
+</body>
+</html>
