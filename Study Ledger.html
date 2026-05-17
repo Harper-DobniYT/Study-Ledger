@@ -723,43 +723,46 @@
   <main id="top">
     <section class="hero">
       <div class="wrap hero-grid">
-      <div class="hero-copy reveal">
-  <div class="eyebrow">Homework and task planning app</div>
+        <div class="hero-copy reveal">
+          <div class="eyebrow">Homework and task planning app</div>
+          <div style="
+  display:flex;
+  align-items:flex-end;
+  gap:1rem;
+  flex-wrap:wrap;
+">
+  <h1 style="margin:0;">
+    Keep every assignment in one calm place.
+  </h1>
 
-  <div style="display:flex;align-items:center;gap:.9rem;flex-wrap:wrap;">
-    <h1 style="margin:0;">Keep every assignment in one calm place.</h1>
-
-    <span style="
-      font-size:1rem;
-      font-family:'Manrope', sans-serif;
-      color:#9a9a9a;
-      font-weight:500;
-      letter-spacing:.05em;
-      transform:translateY(6px);
-    ">
-      v0.1.1 Beta
-    </span>
-  </div>
-
-  <p style="
-    margin-top:.55rem;
-    color:#9c9c9c;
-    font-size:.95rem;
-    font-weight:500;
+  <span style="
+    font-size:1.2rem;
+    color:#9a9895;
+    font-weight:700;
+    margin-bottom:1rem;
+    white-space:nowrap;
   ">
-    Developed by Harper Dobni
-  </p>
-
-  <p>
-    Add homework, projects, chores, and deadlines. Sort by priority, mark things done,
-    and keep your week from turning into a giant mental pile.
-  </p>
-
-  <div class="hero-actions">
-    <a href="#planner" class="btn btn-primary">Add your first task</a>
-    <a href="#tasks" class="btn btn-soft">View task board</a>
-  </div>
+    v0.1.2 Beta
+  </span>
 </div>
+
+<div style="
+  margin-top:.5rem;
+  font-size:1.1rem;
+  color:#9a9895;
+  font-weight:600;
+">
+  Developed by Harper Dobni
+</div>
+          <p>
+            Add homework, projects, chores, and deadlines. Sort by priority, mark things done,
+            and keep your week from turning into a giant mental pile.
+          </p>
+          <div class="hero-actions">
+            <a href="#planner" class="btn btn-primary">Add your first task</a>
+            <a href="#tasks" class="btn btn-soft">View task board</a>
+          </div>
+        </div>
 
         <aside class="hero-panel reveal" id="summary" aria-label="Overview panel">
           <div class="shape a" aria-hidden="true"></div>
@@ -832,55 +835,81 @@
           </div>
 
           <form id="taskForm" class="form-grid">
-            <div class="field">
-              <label for="title">Task title</label>
-              <input id="title" name="title" type="text" placeholder="Finish algebra worksheet" required />
-            </div>
 
-            <div class="field">
-              <label for="description">Notes</label>
-              <textarea id="description" name="description" placeholder="Add details, page numbers, or what to start with first."></textarea>
-            </div>
+  <div class="field">
+    <label for="title">Task title</label>
+    <input id="title" name="title" type="text"
+      placeholder="Finish algebra worksheet" required />
+  </div>
 
-            <div class="split">
-              <div class="field">
-                <label for="subject">Subject / category</label>
-                <input id="subject" name="subject" type="text" placeholder="Math, English, Chores..." />
-              </div>
+  <div class="field">
+    <label for="description">Notes</label>
+    <textarea id="description" name="description"
+      placeholder="Add details, page numbers, or what to start with first."></textarea>
+  </div>
 
-              <div class="field">
-                <label for="dueDate">Due date</label>
-                <input id="dueDate" name="dueDate" type="date" />
-              </div>
-            </div>
+  <div class="split">
+    <div class="field">
+      <label for="subject">Subject / category</label>
+      <input id="subject" name="subject" type="text"
+        placeholder="Math, English, Chores..." />
+    </div>
 
-            <div class="split">
-              <div class="field">
-                <label for="priority">Priority</label>
-                <select id="priority" name="priority">
-                  <option value="high">High</option>
-                  <option value="medium" selected>Medium</option>
-                  <option value="low">Low</option>
-                </select>
-              </div>
+    <div class="field">
+      <label for="dueDate">Due date</label>
+      <input id="dueDate" name="dueDate" type="date" />
+    </div>
+  </div>
 
-              <div class="field">
-                <label for="type">Type</label>
-                <select id="type" name="type">
-                  <option value="homework">Homework</option>
-                  <option value="study">Study</option>
-                  <option value="project">Project</option>
-                  <option value="personal">Personal</option>
-                </select>
-              </div>
-            </div>
+  <div class="split">
+    <div class="field">
+      <label for="priority">Priority</label>
+      <select id="priority" name="priority">
+        <option value="high">High</option>
+        <option value="medium" selected>Medium</option>
+        <option value="low">Low</option>
+      </select>
+    </div>
 
-            <div class="actions">
-              <button class="btn btn-primary" type="submit">Save task</button>
-              <button class="btn btn-soft" type="reset">Reset form</button>
-            </div>
-            <p class="hint">Tip: make your task title specific, like “Read pages 20–25” instead of “Study history.”</p>
-          </form>
+    <div class="field">
+      <label for="type">Type</label>
+      <select id="type" name="type">
+        <option value="homework">Homework</option>
+        <option value="study">Study</option>
+        <option value="project">Project</option>
+        <option value="personal">Personal</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="repeat">Repeat</label>
+    <select id="repeat" name="repeat">
+      <option value="none" selected>Does not repeat</option>
+      <option value="daily">Daily</option>
+      <option value="weekly">Weekly</option>
+      <option value="fortnightly">Fortnightly</option>
+      <option value="monthly">Monthly</option>
+      <option value="yearly">Yearly</option>
+    </select>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" type="submit">
+      Save task
+    </button>
+
+    <button class="btn btn-soft" type="reset">
+      Reset form
+    </button>
+  </div>
+
+  <p class="hint">
+    Tip: make your task title specific, like
+    “Read pages 20–25” instead of “Study history.”
+  </p>
+
+</form>
         </section>
 
         <section class="panel board reveal" id="tasks" aria-labelledby="tasksTitle">
@@ -912,7 +941,7 @@
   </main>
 
   <footer class="footer">
-    <div class="wrap">Study Ledger — built to make your workload visible, sortable, and less stressful.</div>
+    <div class="wrap">Study Ledger by Harper Dobni — built to make your workload visible, sortable, and less stressful.</div>
   </footer>
 
   <script>
@@ -1002,7 +1031,7 @@
             <div class="mini-check" aria-hidden="true"></div>
             <div>
               <strong>No upcoming tasks yet</strong>
-              <p>Add your first homework item to see it here.</p>
+              <p>Add your first task to see it here.</p>
             </div>
             <div class="mini-tag">Clear slate</div>
           </div>
@@ -1074,6 +1103,11 @@
               <span class="badge subject">${escapeHTML(task.subject || task.type)}</span>
               <span class="badge priority-${task.priority}">${getPriorityLabel(task.priority)}</span>
               <span class="badge">${escapeHTML(task.type)}</span>
+
+${task.repeat !== 'none'
+  ? `<span class="badge">Repeats: ${escapeHTML(task.repeat)}</span>`
+  : ''
+}
               <span class="badge">${formatDate(task.dueDate)}</span>
             </div>
             <div class="task-title">${escapeHTML(task.title)}</div>
@@ -1104,7 +1138,8 @@
         subject: (formData.get('subject') || '').toString().trim(),
         dueDate: (formData.get('dueDate') || '').toString(),
         priority: (formData.get('priority') || 'medium').toString(),
-        type: (formData.get('type') || 'homework').toString(),
+      type: (formData.get('type') || 'homework').toString(),
+repeat: (formData.get('repeat') || 'none').toString(),
         done: false,
         createdAt: Date.now()
       };
@@ -1170,8 +1205,134 @@
       renderTasks();
       document.getElementById('planner').scrollIntoView({ behavior:'smooth', block:'start' });
     }
+// Generate next repeat date
+function getNextRepeatDate(dateStr, repeat){
+  const date = new Date(dateStr + 'T00:00:00');
 
+  if(repeat === 'daily'){
+    date.setDate(date.getDate() + 1);
+  }
+
+  if(repeat === 'weekly'){
+    date.setDate(date.getDate() + 7);
+  }
+
+  if(repeat === 'fortnightly'){
+    date.setDate(date.getDate() + 14);
+  }
+
+  if(repeat === 'monthly'){
+    date.setMonth(date.getMonth() + 1);
+  }
+
+  return date.toISOString().split('T')[0];
+}
+
+// Process recurring tasks
+function processRecurringTasks(){
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  let updatedTasks = [];
+
+  tasks.forEach(task => {
+
+    // Keep normal tasks
+    if(task.repeat === 'none'){
+      updatedTasks.push(task);
+      return;
+    }
+
+    // Keep unfinished repeating tasks
+    if(!task.done){
+      updatedTasks.push(task);
+      return;
+    }
+
+    // Keep tasks without due dates
+    if(!task.dueDate){
+      updatedTasks.push(task);
+      return;
+    }
+
+    const due = new Date(task.dueDate + 'T00:00:00');
+    due.setHours(0,0,0,0);
+
+    // Wait until next cycle
+    if(today <= due){
+      updatedTasks.push(task);
+      return;
+    }
+
+    // Create next recurring task
+    const nextDate = getNextRepeatDate(task.dueDate, task.repeat);
+
+    updatedTasks.push({
+      ...task,
+      id: crypto.randomUUID
+        ? crypto.randomUUID()
+        : String(Date.now() + Math.random()),
+
+      dueDate: nextDate,
+      done: false,
+      createdAt: Date.now()
+    });
+
+    // old completed task disappears automatically
+  });
+
+  tasks = updatedTasks;
+  saveTasks();
+}
+function midnightCheck(){
+  const now = new Date();
+
+  if(now.getHours() === 0 && now.getMinutes() === 0){
+    processRecurringTasks();
     renderTasks();
+  }
+}
+
+function processRecurringTasks(){
+  const today = new Date().toDateString();
+
+  const lastRun = localStorage.getItem("repeat-last-run");
+
+  // already processed today → do nothing
+  if(lastRun === today) return;
+
+  let updated = [];
+
+  for(const task of tasks){
+
+    if(task.repeat === "none"){
+      updated.push(task);
+      continue;
+    }
+
+    if(!task.done || !task.dueDate){
+      updated.push(task);
+      continue;
+    }
+
+    const next = getNextRepeatDate(task.dueDate, task.repeat);
+
+    updated.push({
+      ...task,
+      id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+      done: false,
+      dueDate: next
+    });
+  }
+
+  tasks = updated;
+  saveTasks();
+
+  localStorage.setItem("repeat-last-run", today);
+}
+
+processRecurringTasks();
+renderTasks();
   </script>
 </body>
 </html>
