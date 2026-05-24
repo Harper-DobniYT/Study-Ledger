@@ -742,7 +742,7 @@
     margin-bottom:1rem;
     white-space:nowrap;
   ">
-    v0.1.2 Beta
+    v0.1.3 Beta
   </span>
 </div>
 
@@ -759,7 +759,7 @@
             and keep your week from turning into a giant mental pile.
           </p>
           <div class="hero-actions">
-            <a href="#planner" class="btn btn-primary">Add your first task</a>
+            <a href="#planner" class="btn btn-primary">Add task</a>
             <a href="#tasks" class="btn btn-soft">View task board</a>
           </div>
         </div>
@@ -787,10 +787,15 @@
                 <span>Due soon</span>
                 <strong id="statDue">0</strong>
               </div>
-              <div class="stat">
-                <span>Completed</span>
-                <strong id="statDone">0</strong>
-              </div>
+             <div class="stat">
+  <span>Completed</span>
+  <strong id="statDone">0</strong>
+</div>
+
+<div class="stat">
+  <span>Study score</span>
+  <strong id="studyScore">0%</strong>
+</div>
             </div>
 
             <div class="summary-list" id="miniPreview">
@@ -882,17 +887,39 @@
     </div>
   </div>
 
-  <div class="field">
-    <label for="repeat">Repeat</label>
-    <select id="repeat" name="repeat">
-      <option value="none" selected>Does not repeat</option>
-      <option value="daily">Daily</option>
-      <option value="weekly">Weekly</option>
-      <option value="fortnightly">Fortnightly</option>
-      <option value="monthly">Monthly</option>
-      <option value="yearly">Yearly</option>
-    </select>
+ <div class="field">
+  <label for="repeat">Repeat</label>
+  <select id="repeat" name="repeat">
+    <option value="none" selected>Does not repeat</option>
+    <option value="daily">Daily</option>
+    <option value="weekly">Weekly</option>
+    <option value="fortnightly">Fortnightly</option>
+    <option value="monthly">Monthly</option>
+  </select>
+</div>
+
+<div class="field" id="weeklyDaysField" style="display:none;">
+  <label>Repeat on day(s)</label>
+
+  <div style="display:flex;flex-wrap:wrap;gap:.5rem;">
+    <label><input type="checkbox" value="0"> Sun</label>
+    <label><input type="checkbox" value="1"> Mon</label>
+    <label><input type="checkbox" value="2"> Tue</label>
+    <label><input type="checkbox" value="3"> Wed</label>
+    <label><input type="checkbox" value="4"> Thu</label>
+    <label><input type="checkbox" value="5"> Fri</label>
+    <label><input type="checkbox" value="6"> Sat</label>
   </div>
+</div>
+
+<div class="field" id="monthlyDayField" style="display:none;">
+  <label for="monthlyDay">Day of month</label>
+  <select id="monthlyDay">
+    ${Array.from({length:31},(_,i)=>
+      `<option value="${i+1}">${i+1}</option>`
+    ).join('')}
+  </select>
+</div>
 
   <div class="actions">
     <button class="btn btn-primary" type="submit">
@@ -955,8 +982,13 @@
     const statTotal = document.getElementById('statTotal');
     const statDue = document.getElementById('statDue');
     const statDone = document.getElementById('statDone');
+    const studyScore = document.getElementById('studyScore');
     const miniPreview = document.getElementById('miniPreview');
     const todayLabel = document.getElementById('todayLabel');
+    const repeatSelect = document.getElementById('repeat');
+    const dueDateInput = document.getElementById('dueDate');
+    const weeklyDaysField = document.getElementById('weeklyDaysField');
+    const monthlyDayField = document.getElementById('monthlyDayField');
 
     let tasks = JSON.parse(localStorage.getItem('study-ledger-tasks') || '[]');
     let currentFilter = 'all';
@@ -1011,9 +1043,19 @@
     }
 
     function renderStats(){
-      statTotal.textContent = tasks.length;
-      statDone.textContent = tasks.filter(t => t.done).length;
-      statDue.textContent = tasks.filter(t => !t.done && isDueSoon(t.dueDate)).length;
+const totalTasks = tasks.length;
+const completedTasks = tasks.filter(t => t.done).length;
+
+statTotal.textContent = totalTasks;
+statDone.textContent = completedTasks;
+statDue.textContent = tasks.filter(t => !t.done && isDueSoon(t.dueDate)).length;
+
+// Calculate study score
+const score = totalTasks === 0
+  ? 0
+  : Math.round((completedTasks / totalTasks) * 100);
+
+studyScore.textContent = score + '%';
 
       const upcoming = tasks
         .filter(t => !t.done)
@@ -1132,6 +1174,12 @@ ${task.repeat !== 'none'
       if(!title) return;
 
       const task = {
+repeatDays:
+  [...document.querySelectorAll('#weeklyDaysField input:checked')]
+    .map(cb => Number(cb.value)),
+
+monthlyDay:
+  Number(document.getElementById('monthlyDay').value) || null,
         id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
         title,
         description: (formData.get('description') || '').toString().trim(),
@@ -1332,6 +1380,28 @@ function processRecurringTasks(){
 }
 
 processRecurringTasks();
+function updateRepeatUI(){
+  const repeat = repeatSelect.value;
+
+  dueDateInput.disabled = repeat !== 'none';
+
+  if(repeat !== 'none'){
+    dueDateInput.value = '';
+  }
+
+  weeklyDaysField.style.display =
+    (repeat === 'weekly' || repeat === 'fortnightly')
+      ? 'block'
+      : 'none';
+
+  monthlyDayField.style.display =
+    repeat === 'monthly'
+      ? 'block'
+      : 'none';
+}
+
+repeatSelect.addEventListener('change', updateRepeatUI);
+updateRepeatUI();
 renderTasks();
   </script>
 </body>
