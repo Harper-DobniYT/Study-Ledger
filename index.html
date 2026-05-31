@@ -692,7 +692,17 @@
       .board-top{
         grid-template-columns:1fr;
       }
-      .hero-panel{min-height:500px}
+      .hero-panel{
+  min-height:720px;
+}
+
+.summary-shell{
+  overflow-y:auto;
+}
+
+.stats{
+  grid-template-columns:repeat(2,1fr);
+}
       .summary-shell{inset:.75rem}
       .task-card{
         grid-template-columns:auto 1fr;
@@ -742,7 +752,7 @@
     margin-bottom:1rem;
     white-space:nowrap;
   ">
-    v0.1.3 Beta
+    v0.1.4 Beta
   </span>
 </div>
 
@@ -861,10 +871,15 @@
     </div>
 
     <div class="field">
-      <label for="dueDate">Due date</label>
-      <input id="dueDate" name="dueDate" type="date" />
-    </div>
-  </div>
+  <label for="dueDate">Due date</label>
+  <input id="dueDate" name="dueDate" type="date" />
+</div>
+
+<div class="field">
+  <label for="dueTime">Due time</label>
+  <input id="dueTime" name="dueTime" type="time" />
+</div>
+
 
   <div class="split">
     <div class="field">
@@ -914,11 +929,7 @@
 
 <div class="field" id="monthlyDayField" style="display:none;">
   <label for="monthlyDay">Day of month</label>
-  <select id="monthlyDay">
-    ${Array.from({length:31},(_,i)=>
-      `<option value="${i+1}">${i+1}</option>`
-    ).join('')}
-  </select>
+ <select id="monthlyDay"></select>
 </div>
 
   <div class="actions">
@@ -1011,11 +1022,23 @@
       localStorage.setItem('study-ledger-tasks', JSON.stringify(tasks));
     }
 
-    function formatDate(dateStr){
-      if(!dateStr) return 'No due date';
-      const d = new Date(dateStr + 'T00:00:00');
-      return d.toLocaleDateString(undefined, { month:'short', day:'numeric', year:'numeric' });
-    }
+    function formatDate(dateStr, timeStr){
+  if(!dateStr) return 'No due date';
+
+  const d = new Date(dateStr + 'T00:00:00');
+
+  let result = d.toLocaleDateString(undefined, {
+    month:'short',
+    day:'numeric',
+    year:'numeric'
+  });
+
+  if(timeStr){
+    result += ` at ${timeStr}`;
+  }
+
+  return result;
+}
 
     function isDueSoon(dateStr){
       if(!dateStr) return false;
@@ -1150,7 +1173,7 @@ ${task.repeat !== 'none'
   ? `<span class="badge">Repeats: ${escapeHTML(task.repeat)}</span>`
   : ''
 }
-              <span class="badge">${formatDate(task.dueDate)}</span>
+              <span class="badge">${formatDate(task.dueDate, task.dueTime)}</span>
             </div>
             <div class="task-title">${escapeHTML(task.title)}</div>
             ${task.description ? `<div class="task-desc">${escapeHTML(task.description)}</div>` : ''}
@@ -1185,6 +1208,7 @@ monthlyDay:
         description: (formData.get('description') || '').toString().trim(),
         subject: (formData.get('subject') || '').toString().trim(),
         dueDate: (formData.get('dueDate') || '').toString(),
+	ueTime: (formData.get('dueTime') || '').toString(),
         priority: (formData.get('priority') || 'medium').toString(),
       type: (formData.get('type') || 'homework').toString(),
 repeat: (formData.get('repeat') || 'none').toString(),
@@ -1245,6 +1269,7 @@ repeat: (formData.get('repeat') || 'none').toString(),
       document.getElementById('description').value = task.description;
       document.getElementById('subject').value = task.subject;
       document.getElementById('dueDate').value = task.dueDate;
+      document.getElementById('dueTime').value = task.dueTime || '';
       document.getElementById('priority').value = task.priority;
       document.getElementById('type').value = task.type;
 
@@ -1342,43 +1367,63 @@ function midnightCheck(){
 }
 
 function processRecurringTasks(){
-  const today = new Date().toDateString();
+  const today = new Date();
+  today.setHours(0,0,0,0);
 
   const lastRun = localStorage.getItem("repeat-last-run");
+  const todayKey = today.toDateString();
 
-  // already processed today → do nothing
-  if(lastRun === today) return;
+  if(lastRun === todayKey) return;
 
-  let updated = [];
+  let updatedTasks = [];
 
   for(const task of tasks){
 
     if(task.repeat === "none"){
-      updated.push(task);
+      updatedTasks.push(task);
       continue;
     }
 
-    if(!task.done || !task.dueDate){
-      updated.push(task);
+    if(!task.done){
+      updatedTasks.push(task);
       continue;
     }
 
-    const next = getNextRepeatDate(task.dueDate, task.repeat);
+    if(!task.dueDate){
+      updatedTasks.push({
+        ...task,
+        done:false
+      });
+      continue;
+    }
 
-    updated.push({
+    let nextDate = task.dueDate;
+
+    while(true){
+      const next = new Date(nextDate + "T00:00:00");
+      next.setHours(0,0,0,0);
+
+      if(next >= today) break;
+
+      nextDate = getNextRepeatDate(nextDate, task.repeat);
+    }
+
+    updatedTasks.push({
       ...task,
-      id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
-      done: false,
-      dueDate: next
+      id: crypto.randomUUID
+        ? crypto.randomUUID()
+        : String(Date.now() + Math.random()),
+      done:false,
+      dueDate: nextDate,
+      createdAt: Date.now()
     });
   }
 
-  tasks = updated;
+  tasks = updatedTasks;
   saveTasks();
 
-  localStorage.setItem("repeat-last-run", today);
+  localStorage.setItem("repeat-last-run", todayKey);
 }
-
 processRecurringTasks();
 function updateRepeatUI(){
   const repeat = repeatSelect.value;
@@ -1402,6 +1447,16 @@ function updateRepeatUI(){
 
 repeatSelect.addEventListener('change', updateRepeatUI);
 updateRepeatUI();
+
+const monthlyDaySelect =
+  document.getElementById('monthlyDay');
+
+for(let i = 1; i <= 31; i++){
+  const option = document.createElement('option');
+  option.value = i;
+  option.textContent = i;
+  monthlyDaySelect.appendChild(option);
+}
 renderTasks();
   </script>
 </body>
