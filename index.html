@@ -752,7 +752,7 @@
     margin-bottom:1rem;
     white-space:nowrap;
   ">
-    v0.1.4 Beta
+    v0.1.5 Beta
   </span>
 </div>
 
@@ -1022,7 +1022,7 @@
       localStorage.setItem('study-ledger-tasks', JSON.stringify(tasks));
     }
 
-    function formatDate(dateStr, timeStr){
+function formatDate(dateStr, timeStr){
   if(!dateStr) return 'No due date';
 
   const d = new Date(dateStr + 'T00:00:00');
@@ -1034,12 +1034,19 @@
   });
 
   if(timeStr){
-    result += ` at ${timeStr}`;
+    const [hours, minutes] = timeStr.split(':');
+
+    const time = new Date();
+    time.setHours(hours, minutes);
+
+    result += ' at ' + time.toLocaleTimeString([], {
+      hour: 'numeric',
+      minute: '2-digit'
+    });
   }
 
   return result;
 }
-
     function isDueSoon(dateStr){
       if(!dateStr) return false;
       const today = new Date();
@@ -1109,7 +1116,7 @@ studyScore.textContent = score + '%';
           <div class="mini-check" aria-hidden="true"></div>
           <div>
             <strong>${escapeHTML(task.title)}</strong>
-            <p>${task.dueDate ? 'Due ' + formatDate(task.dueDate) : 'No due date'}</p>
+            <p>${task.dueDate ? 'Due ' + formatDate(task.dueDate, task.dueTime) : 'No due date'}</p>
           </div>
           <div class="mini-tag">${escapeHTML(task.subject || task.type)}</div>
         </div>
@@ -1173,7 +1180,16 @@ ${task.repeat !== 'none'
   ? `<span class="badge">Repeats: ${escapeHTML(task.repeat)}</span>`
   : ''
 }
-              <span class="badge">${formatDate(task.dueDate, task.dueTime)}</span>
+              ${task.dueTime
+  ? `<span class="badge"> ${
+      new Date(`2000-01-01T${task.dueTime}`)
+        .toLocaleTimeString([], {
+          hour: 'numeric',
+          minute: '2-digit'
+        })
+    }</span>`
+  : ''
+}
             </div>
             <div class="task-title">${escapeHTML(task.title)}</div>
             ${task.description ? `<div class="task-desc">${escapeHTML(task.description)}</div>` : ''}
@@ -1208,7 +1224,7 @@ monthlyDay:
         description: (formData.get('description') || '').toString().trim(),
         subject: (formData.get('subject') || '').toString().trim(),
         dueDate: (formData.get('dueDate') || '').toString(),
-	ueTime: (formData.get('dueTime') || '').toString(),
+	dueTime: (formData.get('dueTime') || '').toString(),
         priority: (formData.get('priority') || 'medium').toString(),
       type: (formData.get('type') || 'homework').toString(),
 repeat: (formData.get('repeat') || 'none').toString(),
