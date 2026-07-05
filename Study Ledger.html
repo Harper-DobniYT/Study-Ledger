@@ -752,7 +752,7 @@
     margin-bottom:1rem;
     white-space:nowrap;
   ">
-    v0.1.5 Beta
+    v0.1.6 Beta
   </span>
 </div>
 
@@ -805,6 +805,11 @@
 <div class="stat">
   <span>Study score</span>
   <strong id="studyScore">0%</strong>
+</div>
+
+<div class="stat">
+  <span>Overdue</span>
+  <strong id="statOverdue">0</strong>
 </div>
             </div>
 
@@ -994,6 +999,7 @@
     const statDue = document.getElementById('statDue');
     const statDone = document.getElementById('statDone');
     const studyScore = document.getElementById('studyScore');
+    const statOverdue = document.getElementById('statOverdue');
     const miniPreview = document.getElementById('miniPreview');
     const todayLabel = document.getElementById('todayLabel');
     const repeatSelect = document.getElementById('repeat');
@@ -1055,6 +1061,17 @@ function formatDate(dateStr, timeStr){
       const diff = Math.ceil((due - today) / (1000 * 60 * 60 * 24));
       return diff >= 0 && diff <= 3;
     }
+      function isOverdue(dateStr){
+  if(!dateStr) return false;
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  const due = new Date(dateStr + 'T00:00:00');
+  due.setHours(0,0,0,0);
+
+  return due < today;
+}
 
     function getPriorityLabel(priority){
       if(priority === 'high') return 'High priority';
@@ -1079,6 +1096,8 @@ const completedTasks = tasks.filter(t => t.done).length;
 statTotal.textContent = totalTasks;
 statDone.textContent = completedTasks;
 statDue.textContent = tasks.filter(t => !t.done && isDueSoon(t.dueDate)).length;
+statOverdue.textContent =
+  tasks.filter(t => !t.done && isOverdue(t.dueDate)).length;
 
 // Calculate study score
 const score = totalTasks === 0
@@ -1180,8 +1199,19 @@ ${task.repeat !== 'none'
   ? `<span class="badge">Repeats: ${escapeHTML(task.repeat)}</span>`
   : ''
 }
-              ${task.dueTime
-  ? `<span class="badge"> ${
+   ${task.dueDate
+  ? `<span class="badge">📅 ${
+      new Date(task.dueDate + 'T00:00:00').toLocaleDateString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      })
+    }</span>`
+  : ''
+}
+
+${task.dueTime
+  ? `<span class="badge">🕒 ${
       new Date(`2000-01-01T${task.dueTime}`)
         .toLocaleTimeString([], {
           hour: 'numeric',
