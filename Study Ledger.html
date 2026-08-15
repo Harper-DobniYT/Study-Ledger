@@ -712,6 +712,121 @@
         flex-direction:row;
       }
     }
+
+    /* Study Ledger for Families */
+    .families-page{
+      display:none;
+      padding:2rem 0 4rem;
+    }
+    .families-page.active{display:block}
+    .family-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:1rem;
+      margin-bottom:1.25rem;
+      flex-wrap:wrap;
+    }
+    .family-title{
+      font-size:clamp(3rem,7vw,5.5rem);
+      max-width:12ch;
+    }
+    .family-subtitle{
+      margin-top:.8rem;
+      color:var(--muted);
+      max-width:65ch;
+      font-size:1.05rem;
+    }
+    .family-grid{
+      display:grid;
+      grid-template-columns:.75fr 1.25fr;
+      gap:1.2rem;
+      align-items:start;
+    }
+    .family-panel{
+      padding:1.15rem;
+      border-radius:32px;
+      background:linear-gradient(180deg, rgba(255,255,255,.74), rgba(255,255,255,.48));
+      border:1px solid rgba(29,26,23,.08);
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(12px);
+    }
+    .family-members{
+      display:grid;
+      gap:.65rem;
+      margin-top:1rem;
+    }
+    .family-member{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:.75rem;
+      padding:.85rem;
+      border-radius:18px;
+      background:rgba(255,255,255,.62);
+      border:1px solid rgba(29,26,23,.08);
+    }
+    .family-member-name{
+      font-weight:800;
+    }
+    .family-member-count{
+      color:var(--muted);
+      font-size:.82rem;
+    }
+    .family-task{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      gap:1rem;
+      align-items:start;
+      padding:1rem;
+      border-radius:24px;
+      background:rgba(251,248,242,.86);
+      border:1px solid rgba(29,26,23,.08);
+    }
+    .family-task.done .family-task-title{
+      text-decoration:line-through;
+      color:#706861;
+    }
+    .family-task-list{
+      display:grid;
+      gap:.85rem;
+      min-height:160px;
+      margin-top:1rem;
+    }
+    .family-filter{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.6rem;
+      align-items:center;
+    }
+    .family-filter select,
+    .family-filter input{
+      max-width:280px;
+    }
+    .family-empty{
+      border:1px dashed rgba(29,26,23,.18);
+      border-radius:24px;
+      padding:1.75rem;
+      color:var(--muted);
+      background:rgba(255,255,255,.34);
+    }
+    .family-danger{
+      border:none;
+      background:transparent;
+      color:var(--danger);
+      font-weight:800;
+      padding:.4rem .5rem;
+      border-radius:10px;
+    }
+    .family-danger:hover{background:rgba(167,74,59,.1)}
+    @media (max-width:1020px){
+      .family-grid{grid-template-columns:1fr}
+    }
+    @media (max-width:760px){
+      .family-task{grid-template-columns:auto 1fr}
+      .family-task .task-actions{grid-column:2}
+    }
+
   </style>
 </head>
 <body>
@@ -752,7 +867,7 @@
     margin-bottom:1rem;
     white-space:nowrap;
   ">
-    v1.0
+    v1.1
   </span>
 </div>
 
@@ -771,6 +886,7 @@
           <div class="hero-actions">
             <a href="#planner" class="btn btn-primary">Add task</a>
             <a href="#tasks" class="btn btn-soft">View task board</a>
+            <button class="btn btn-soft" id="familiesBtn" type="button">Study Ledger for families</button>
           </div>
         </div>
 
@@ -981,6 +1097,96 @@
         </section>
       </div>
     </section>
+  </main>
+
+
+  <main id="familiesPage" class="families-page" aria-labelledby="familiesTitle">
+    <div class="wrap">
+      <div class="family-header">
+        <div>
+          <div class="eyebrow">Family planning</div>
+          <h1 id="familiesTitle" class="family-title">Study Ledger for Families</h1>
+          <p class="family-subtitle">
+            Add family members, assign tasks to them, and filter the board so everyone can quickly see what they need to do.
+          </p>
+        </div>
+        <button class="btn btn-soft" id="backToLedgerBtn" type="button">← Back to Study Ledger</button>
+      </div>
+
+      <div class="family-grid">
+        <section class="family-panel" aria-labelledby="familyMembersTitle">
+          <div class="panel-head">
+            <div>
+              <h2 id="familyMembersTitle">Family members</h2>
+              <p>Add the people who will receive assigned tasks.</p>
+            </div>
+          </div>
+
+          <form id="familyMemberForm" class="form-grid">
+            <div class="field">
+              <label for="familyMemberName">Member name</label>
+              <input id="familyMemberName" type="text" placeholder="e.g. John" required />
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">Add family member</button>
+            </div>
+          </form>
+
+          <div class="family-members" id="familyMembersList"></div>
+        </section>
+
+        <section class="family-panel" aria-labelledby="familyTasksTitle">
+          <div class="panel-head">
+            <div>
+              <h2 id="familyTasksTitle">Family tasks</h2>
+              <p>Create a task and assign it to a family member.</p>
+            </div>
+          </div>
+
+          <form id="familyTaskForm" class="form-grid">
+            <div class="field">
+              <label for="familyTaskTitle">Task</label>
+              <input id="familyTaskTitle" type="text" placeholder="e.g. Clean your room" required />
+            </div>
+
+            <div class="field">
+              <label for="familyTaskDescription">Notes</label>
+              <textarea id="familyTaskDescription" placeholder="Optional details"></textarea>
+            </div>
+
+            <div class="split">
+              <div class="field">
+                <label for="familyTaskMember">Assign to</label>
+                <select id="familyTaskMember" required></select>
+              </div>
+              <div class="field">
+                <label for="familyTaskDueDate">Due date</label>
+                <input id="familyTaskDueDate" type="date" />
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">Assign task</button>
+              <button class="btn btn-soft" type="reset">Reset</button>
+            </div>
+          </form>
+
+          <div style="margin-top:1.5rem;">
+            <div class="family-filter">
+              <select id="familyMemberFilter" aria-label="Filter by family member"></select>
+              <select id="familyStatusFilter" aria-label="Filter family tasks">
+                <option value="all">All tasks</option>
+                <option value="active">Active</option>
+                <option value="done">Completed</option>
+              </select>
+              <input id="familyTaskSearch" type="search" placeholder="Search family tasks" aria-label="Search family tasks" />
+            </div>
+          </div>
+
+          <div class="family-task-list" id="familyTaskList" aria-live="polite"></div>
+        </section>
+      </div>
+    </div>
   </main>
 
   <footer class="footer">
@@ -1403,14 +1609,260 @@ function processRecurringTasks(){
   tasks = updatedTasks;
   saveTasks();
 }
-function midnightCheck(){
-  const now = new Date();
+// Study Ledger for Families
+// -----------------------------
+// Study Ledger for Families
+// -----------------------------
+const familiesPage = document.getElementById('familiesPage');
+const familiesBtn = document.getElementById('familiesBtn');
+const backToLedgerBtn = document.getElementById('backToLedgerBtn');
+const familyMemberForm = document.getElementById('familyMemberForm');
+const familyMemberName = document.getElementById('familyMemberName');
+const familyMembersList = document.getElementById('familyMembersList');
+const familyTaskForm = document.getElementById('familyTaskForm');
+const familyTaskTitle = document.getElementById('familyTaskTitle');
+const familyTaskDescription = document.getElementById('familyTaskDescription');
+const familyTaskMember = document.getElementById('familyTaskMember');
+const familyTaskDueDate = document.getElementById('familyTaskDueDate');
+const familyMemberFilter = document.getElementById('familyMemberFilter');
+const familyStatusFilter = document.getElementById('familyStatusFilter');
+const familyTaskSearch = document.getElementById('familyTaskSearch');
+const familyTaskList = document.getElementById('familyTaskList');
 
-  if(now.getHours() === 0 && now.getMinutes() === 0){
-    processRecurringTasks();
-    renderTasks();
-  }
+let familyMembers = JSON.parse(localStorage.getItem('study-ledger-family-members') || '[]');
+let familyTasks = JSON.parse(localStorage.getItem('study-ledger-family-tasks') || '[]');
+
+function saveFamilyData(){
+  localStorage.setItem('study-ledger-family-members', JSON.stringify(familyMembers));
+  localStorage.setItem('study-ledger-family-tasks', JSON.stringify(familyTasks));
 }
+
+function familyId(){
+  return crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random());
+}
+
+function renderFamilyMemberOptions(){
+  const currentAssignee = familyTaskMember.value;
+  const currentFilter = familyMemberFilter.value;
+
+  familyTaskMember.innerHTML = familyMembers.length
+    ? familyMembers.map(member =>
+        `<option value="${escapeHTML(member.id)}">${escapeHTML(member.name)}</option>`
+      ).join('')
+    : '<option value="">Add a family member first</option>';
+
+  familyMemberFilter.innerHTML =
+    '<option value="all">All family members</option>' +
+    familyMembers.map(member =>
+      `<option value="${escapeHTML(member.id)}">${escapeHTML(member.name)}</option>`
+    ).join('');
+
+  if(familyMembers.some(m => m.id === currentAssignee)){
+    familyTaskMember.value = currentAssignee;
+  }
+  if(currentFilter === 'all' || familyMembers.some(m => m.id === currentFilter)){
+    familyMemberFilter.value = currentFilter || 'all';
+  }else{
+    familyMemberFilter.value = 'all';
+  }
+
+  familyTaskMember.disabled = familyMembers.length === 0;
+}
+
+function renderFamilyMembers(){
+  if(familyMembers.length === 0){
+    familyMembersList.innerHTML = `
+      <div class="family-empty">
+        <strong>No family members yet.</strong>
+        <p style="margin-top:.35rem;">Add a family member above to start assigning tasks.</p>
+      </div>`;
+    return;
+  }
+
+  familyMembersList.innerHTML = familyMembers.map(member => {
+    const count = familyTasks.filter(task => task.memberId === member.id && !task.done).length;
+    return `
+      <div class="family-member">
+        <div>
+          <div class="family-member-name">${escapeHTML(member.name)}</div>
+          <div class="family-member-count">${count} active task${count === 1 ? '' : 's'}</div>
+        </div>
+        <button class="family-danger" type="button" onclick="removeFamilyMember('${member.id}')">Remove</button>
+      </div>`;
+  }).join('');
+}
+
+function renderFamilyTasks(){
+  const memberFilter = familyMemberFilter.value || 'all';
+  const statusFilter = familyStatusFilter.value || 'all';
+  const query = familyTaskSearch.value.trim().toLowerCase();
+
+  const filtered = familyTasks
+    .filter(task => {
+      const memberMatch = memberFilter === 'all' || task.memberId === memberFilter;
+      const statusMatch =
+        statusFilter === 'active' ? !task.done :
+        statusFilter === 'done' ? task.done : true;
+
+      const member = familyMembers.find(m => m.id === task.memberId);
+      const searchText = `${task.title} ${task.description || ''} ${member ? member.name : ''}`.toLowerCase();
+
+      return memberMatch && statusMatch && searchText.includes(query);
+    })
+    .sort((a,b) => {
+      if(a.done !== b.done) return a.done - b.done;
+      if(!a.dueDate && !b.dueDate) return b.createdAt - a.createdAt;
+      if(!a.dueDate) return 1;
+      if(!b.dueDate) return -1;
+      return new Date(a.dueDate) - new Date(b.dueDate);
+    });
+
+  if(filtered.length === 0){
+    familyTaskList.innerHTML = `
+      <div class="family-empty">
+        <strong>No family tasks found.</strong>
+        <p style="margin-top:.35rem;">Add a task or change the family member/status filter.</p>
+      </div>`;
+    return;
+  }
+
+  familyTaskList.innerHTML = filtered.map(task => {
+    const member = familyMembers.find(m => m.id === task.memberId);
+    const due = task.dueDate
+      ? new Date(task.dueDate + 'T00:00:00').toLocaleDateString(undefined, {
+          month:'short', day:'numeric', year:'numeric'
+        })
+      : 'No due date';
+
+    return `
+      <article class="family-task ${task.done ? 'done' : ''}">
+        <button class="check-btn" type="button"
+          aria-label="${task.done ? 'Mark as active' : 'Mark as completed'}"
+          onclick="toggleFamilyTask('${task.id}')"></button>
+
+        <div class="task-main">
+          <div class="task-meta">
+            <span class="badge subject">${escapeHTML(member ? member.name : 'Unassigned')}</span>
+            <span class="badge">📅 ${due}</span>
+          </div>
+          <div class="family-task-title task-title">${escapeHTML(task.title)}</div>
+          ${task.description ? `<div class="task-desc">${escapeHTML(task.description)}</div>` : ''}
+        </div>
+
+        <div class="task-actions">
+          <button class="icon-btn" type="button" aria-label="Delete family task"
+            onclick="deleteFamilyTask('${task.id}')">✕</button>
+        </div>
+      </article>`;
+  }).join('');
+}
+
+function renderFamilyPage(){
+  renderFamilyMemberOptions();
+  renderFamilyMembers();
+  renderFamilyTasks();
+}
+
+function showFamiliesPage(){
+  document.querySelector('header.topbar').style.display = 'none';
+  document.querySelector('main#top').style.display = 'none';
+  document.querySelector('footer.footer').style.display = 'none';
+  familiesPage.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+  renderFamilyPage();
+}
+
+function showMainLedger(){
+  familiesPage.classList.remove('active');
+  document.querySelector('header.topbar').style.display = '';
+  document.querySelector('main#top').style.display = '';
+  document.querySelector('footer.footer').style.display = '';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+familiesBtn.addEventListener('click', showFamiliesPage);
+backToLedgerBtn.addEventListener('click', showMainLedger);
+
+familyMemberForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const name = familyMemberName.value.trim();
+  if(!name) return;
+
+  familyMembers.push({
+    id: familyId(),
+    name,
+    createdAt: Date.now()
+  });
+
+  saveFamilyData();
+  familyMemberForm.reset();
+  renderFamilyPage();
+});
+
+familyTaskForm.addEventListener('submit', e => {
+  e.preventDefault();
+
+  const title = familyTaskTitle.value.trim();
+  const memberId = familyTaskMember.value;
+
+  if(!title || !memberId){
+    alert('Please add a family member and choose who the task is assigned to.');
+    return;
+  }
+
+  familyTasks.unshift({
+    id: familyId(),
+    title,
+    description: familyTaskDescription.value.trim(),
+    memberId,
+    dueDate: familyTaskDueDate.value,
+    done:false,
+    createdAt:Date.now()
+  });
+
+  saveFamilyData();
+  familyTaskForm.reset();
+  renderFamilyPage();
+});
+
+familyMemberFilter.addEventListener('change', renderFamilyTasks);
+familyStatusFilter.addEventListener('change', renderFamilyTasks);
+familyTaskSearch.addEventListener('input', renderFamilyTasks);
+
+window.toggleFamilyTask = function(id){
+  familyTasks = familyTasks.map(task =>
+    task.id === id ? {...task, done:!task.done} : task
+  );
+  saveFamilyData();
+  renderFamilyPage();
+};
+
+window.deleteFamilyTask = function(id){
+  familyTasks = familyTasks.filter(task => task.id !== id);
+  saveFamilyData();
+  renderFamilyPage();
+};
+
+window.removeFamilyMember = function(id){
+  const member = familyMembers.find(m => m.id === id);
+  if(!member) return;
+
+  const hasTasks = familyTasks.some(task => task.memberId === id);
+  const message = hasTasks
+    ? `${member.name} has assigned tasks. Remove the member and those tasks too?`
+    : `Remove ${member.name} from the family?`;
+
+  if(!confirm(message)) return;
+
+  familyMembers = familyMembers.filter(m => m.id !== id);
+  familyTasks = familyTasks.filter(task => task.memberId !== id);
+  saveFamilyData();
+  renderFamilyPage();
+};
+
+renderFamilyPage();
+
+renderTasks();
 
 function processRecurringTasks(){
   const today = new Date();
