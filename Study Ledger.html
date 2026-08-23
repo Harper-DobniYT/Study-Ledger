@@ -1283,35 +1283,14 @@
           <div class="eyebrow">Family planning</div>
           <h1 id="familiesTitle" class="family-title">Study Ledger for Families</h1>
           <p class="family-subtitle">
-            Add family members, assign tasks to them, and filter the board so everyone can quickly see what they need to do.
-            Use Settings to turn Families mode off and return to the main ledger.
+            Assign tasks to family members and filter the board so everyone can quickly see what they need to do.
+            Add or remove members in Settings. Turn Families mode off there to return to the main ledger.
           </p>
         </div>
         <button class="btn btn-soft" id="familiesSettingsBtn" type="button">Settings</button>
       </div>
 
-      <div class="family-grid">
-        <section class="family-panel" aria-labelledby="familyMembersTitle">
-          <div class="panel-head">
-            <div>
-              <h2 id="familyMembersTitle">Family members</h2>
-              <p>Add the people who will receive assigned tasks.</p>
-            </div>
-          </div>
-
-          <form id="familyMemberForm" class="form-grid">
-            <div class="field">
-              <label for="familyMemberName">Member name</label>
-              <input id="familyMemberName" type="text" placeholder="e.g. John" required />
-            </div>
-            <div class="actions">
-              <button class="btn btn-primary" type="submit">Add family member</button>
-            </div>
-          </form>
-
-          <div class="family-members" id="familyMembersList"></div>
-        </section>
-
+      <div class="family-grid" style="grid-template-columns:1fr;">
         <section class="family-panel" aria-labelledby="familyTasksTitle">
           <div class="panel-head">
             <div>
@@ -1382,8 +1361,9 @@
       <section class="settings-section" aria-labelledby="familiesSettingsHeading">
         <h2 id="familiesSettingsHeading">Study Ledger for Families</h2>
         <p>
-          Enable a shared family task board. The first time you turn this on, you’ll set a PIN.
-          While Families mode is active, opening Settings requires that PIN. Turn the switch off to return to the main Study Ledger.
+          Enable a shared family task board, manage the PIN, and add the people who can be assigned tasks.
+          The first time you turn this on, you’ll set a PIN. While Families mode is active, opening Settings
+          requires that PIN. Turn the switch off to return to the main Study Ledger.
         </p>
         <div class="settings-row">
           <div class="settings-row-label">
@@ -1395,6 +1375,29 @@
             <span class="toggle-slider"></span>
           </label>
         </div>
+        <div class="settings-row">
+          <div class="settings-row-label">
+            <strong>Change PIN</strong>
+            <span id="pinChangeHint">Update the PIN used to open Settings in Families mode.</span>
+          </div>
+          <button class="btn btn-soft" type="button" id="changePinBtn">Change PIN</button>
+        </div>
+        <div class="settings-row" style="display:grid;gap:.9rem;align-items:start;">
+          <div class="settings-row-label">
+            <strong>Family members</strong>
+            <span>Add the people who can be assigned tasks on the Families board.</span>
+          </div>
+          <form id="familyMemberForm" class="form-grid">
+            <div class="field">
+              <label for="familyMemberName">Member name</label>
+              <input id="familyMemberName" type="text" placeholder="e.g. John" required />
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">Add family member</button>
+            </div>
+          </form>
+          <div class="family-members" id="familyMembersList"></div>
+        </div>
       </section>
     </div>
   </main>
@@ -1405,6 +1408,7 @@
       <p id="pinModalMessage">Enter your Families PIN to continue.</p>
       <div class="pin-error" id="pinError">Incorrect PIN. Try again.</div>
       <input type="password" id="pinInput" inputmode="numeric" pattern="[0-9]*" maxlength="8" autocomplete="off" placeholder="••••" aria-label="PIN" />
+      <input type="password" id="pinConfirmInput" inputmode="numeric" pattern="[0-9]*" maxlength="8" autocomplete="off" placeholder="Confirm PIN" aria-label="Confirm new PIN" style="display:none;" />
       <div class="pin-modal-actions">
         <button class="btn btn-primary" type="button" id="pinConfirmBtn">Confirm</button>
         <button class="btn btn-soft" type="button" id="pinCancelBtn">Cancel</button>
@@ -1845,9 +1849,12 @@ const pinModalOverlay = document.getElementById('pinModalOverlay');
 const pinModalTitle = document.getElementById('pinModalTitle');
 const pinModalMessage = document.getElementById('pinModalMessage');
 const pinInput = document.getElementById('pinInput');
+const pinConfirmInput = document.getElementById('pinConfirmInput');
 const pinError = document.getElementById('pinError');
 const pinConfirmBtn = document.getElementById('pinConfirmBtn');
 const pinCancelBtn = document.getElementById('pinCancelBtn');
+const changePinBtn = document.getElementById('changePinBtn');
+const pinChangeHint = document.getElementById('pinChangeHint');
 
 const familyMemberForm = document.getElementById('familyMemberForm');
 const familyMemberName = document.getElementById('familyMemberName');
@@ -1867,7 +1874,7 @@ let familyTasks = JSON.parse(localStorage.getItem('study-ledger-family-tasks') |
 let familiesEnabled = localStorage.getItem('study-ledger-families-enabled') === 'true';
 let familiesPin = localStorage.getItem('study-ledger-families-pin') || '';
 
-let pinMode = null; // 'set' | 'verify-settings'
+let pinMode = null; // 'set' | 'verify-settings' | 'change-current' | 'change-new'
 let pinResolve = null;
 
 function saveFamilyData(){
@@ -1916,6 +1923,13 @@ function showSettingsPage(){
   hideAllViews();
   settingsPage.classList.add('active');
   updateFamiliesToggleUI();
+  if(changePinBtn) changePinBtn.textContent = familiesPin ? 'Change PIN' : 'Set PIN';
+  if(pinChangeHint){
+    pinChangeHint.textContent = familiesPin
+      ? 'Update the PIN used to open Settings in Families mode.'
+      : 'No PIN yet — turn Families on to create one, or set it here.';
+  }
+  renderFamilyMembers();
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
@@ -1932,6 +1946,8 @@ function openPinModal(mode, title, message){
   pinModalMessage.textContent = message;
   pinError.classList.remove('visible');
   pinInput.value = '';
+  pinConfirmInput.value = '';
+  pinConfirmInput.style.display = mode === 'change-new' ? '' : 'none';
   pinModalOverlay.classList.add('active');
   setTimeout(() => pinInput.focus(), 50);
 
@@ -1943,6 +1959,8 @@ function openPinModal(mode, title, message){
 function closePinModal(result){
   pinModalOverlay.classList.remove('active');
   pinInput.value = '';
+  pinConfirmInput.value = '';
+  pinConfirmInput.style.display = 'none';
   pinError.classList.remove('visible');
   const resolve = pinResolve;
   pinResolve = null;
@@ -1950,20 +1968,20 @@ function closePinModal(result){
   if(resolve) resolve(result);
 }
 
-pinConfirmBtn.addEventListener('click', () => {
+pinConfirmBtn.addEventListener('click', async () => {
   const value = pinInput.value.trim();
   if(!value){
     pinError.textContent = 'Please enter a PIN.';
     pinError.classList.add('visible');
     return;
   }
-  if(value.length < 4){
-    pinError.textContent = 'PIN must be at least 4 characters.';
-    pinError.classList.add('visible');
-    return;
-  }
 
   if(pinMode === 'set'){
+    if(value.length < 4){
+      pinError.textContent = 'PIN must be at least 4 characters.';
+      pinError.classList.add('visible');
+      return;
+    }
     saveFamiliesPin(value);
     closePinModal(true);
     return;
@@ -1978,7 +1996,72 @@ pinConfirmBtn.addEventListener('click', () => {
       pinInput.value = '';
       pinInput.focus();
     }
+    return;
   }
+
+  if(pinMode === 'change-current'){
+    if(value !== familiesPin){
+      pinError.textContent = 'Incorrect PIN. Try again.';
+      pinError.classList.add('visible');
+      pinInput.value = '';
+      pinInput.focus();
+      return;
+    }
+    closePinModal(true);
+    const ok = await openPinModal(
+      'change-new',
+      'Choose a new PIN',
+      'Enter a new PIN (at least 4 characters), then enter it again to confirm.'
+    );
+    return;
+  }
+
+  if(pinMode === 'change-new'){
+    if(value.length < 4){
+      pinError.textContent = 'PIN must be at least 4 characters.';
+      pinError.classList.add('visible');
+      return;
+    }
+    const confirm = pinConfirmInput.value.trim();
+    if(!confirm){
+      pinError.textContent = 'Please confirm the new PIN.';
+      pinError.classList.add('visible');
+      return;
+    }
+    if(value !== confirm){
+      pinError.textContent = 'The two PINs don’t match.';
+      pinError.classList.add('visible');
+      return;
+    }
+    if(familiesPin && value === familiesPin){
+      pinError.textContent = 'Choose a PIN that’s different from the current one.';
+      pinError.classList.add('visible');
+      return;
+    }
+    saveFamiliesPin(value);
+    if(pinChangeHint) pinChangeHint.textContent = 'PIN updated.';
+    if(changePinBtn) changePinBtn.textContent = 'Change PIN';
+    closePinModal(true);
+  }
+});
+
+changePinBtn.addEventListener('click', async () => {
+  if(pinChangeHint) pinChangeHint.textContent = 'Update the PIN used to open Settings in Families mode.';
+  if(!familiesPin){
+    const set = await openPinModal(
+      'change-new',
+      'Create a PIN',
+      'Choose a PIN (at least 4 characters), then enter it again to confirm.'
+    );
+    if(set && pinChangeHint) pinChangeHint.textContent = 'PIN saved.';
+    if(set && changePinBtn) changePinBtn.textContent = 'Change PIN';
+    return;
+  }
+  await openPinModal(
+    'change-current',
+    'Current PIN',
+    'Enter your current Families PIN to continue.'
+  );
 });
 
 pinCancelBtn.addEventListener('click', () => closePinModal(false));
@@ -2062,7 +2145,7 @@ function renderFamilyMemberOptions(){
     ? familyMembers.map(member =>
         `<option value="${escapeHTML(member.id)}">${escapeHTML(member.name)}</option>`
       ).join('')
-    : '<option value="">Add a family member first</option>';
+    : '<option value="">Add members in Settings first</option>';
 
   familyMemberFilter.innerHTML =
     '<option value="all">All family members</option>' +
