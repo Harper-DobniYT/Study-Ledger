@@ -713,6 +713,302 @@
       }
     }
 
+
+    html.dark{
+      --bg:#14110e;
+      --paper:#1c1814;
+      --paper-2:#221d18;
+      --ink:#f3ece3;
+      --muted:#b3aaa0;
+      --line:rgba(243,236,227,.12);
+      --accent:#c4895a;
+      --accent-2:#8fbfb0;
+      --accent-3:#d7b172;
+      --danger:#e08a7a;
+      --shadow:0 24px 60px rgba(0,0,0,.42);
+      color-scheme:dark;
+    }
+    html.dark body{
+      background:
+        radial-gradient(circle at 8% 12%, rgba(196,137,90,.14), transparent 22%),
+        radial-gradient(circle at 90% 14%, rgba(143,191,176,.1), transparent 24%),
+        linear-gradient(180deg, #14110e 0%, #1a1612 100%);
+    }
+    html.dark body::before{
+      background-image:
+        linear-gradient(rgba(243,236,227,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(243,236,227,.04) 1px, transparent 1px);
+    }
+    html.dark .topbar{background:rgba(28,24,20,.78)}
+    html.dark .panel,
+    html.dark .family-panel,
+    html.dark .settings-section,
+    html.dark .hero-panel{
+      background:linear-gradient(180deg, rgba(36,31,26,.92), rgba(28,24,20,.88));
+    }
+    html.dark input, html.dark select, html.dark textarea{
+      background:rgba(28,24,20,.9);
+      color:var(--ink);
+    }
+    html.dark .task-card,
+    html.dark .family-task,
+    html.dark .stat,
+    html.dark .mini-item,
+    html.dark .summary-shell{
+      background:rgba(28,24,20,.86);
+    }
+
+    /* Task board + filters */
+    html.dark .board,
+    html.dark .panel.board{
+      background:linear-gradient(180deg, rgba(36,31,26,.9), rgba(28,24,20,.86));
+      border-color:rgba(243,236,227,.08);
+    }
+    html.dark .pill{
+      background:rgba(243,236,227,.07);
+      color:rgba(243,236,227,.62);
+      border-color:rgba(243,236,227,.12);
+    }
+    html.dark .pill:hover{
+      background:rgba(243,236,227,.12);
+      color:rgba(243,236,227,.85);
+    }
+    html.dark .pill.active{
+      background:rgba(196,137,90,.28);
+      color:rgba(243,236,227,.95);
+      box-shadow:none;
+      border-color:rgba(196,137,90,.25);
+    }
+    html.dark .task-card{
+      background:rgba(36,31,26,.9);
+      border-color:rgba(243,236,227,.1);
+      box-shadow:none;
+    }
+    html.dark .task-card:hover{
+      background:rgba(42,36,30,.95);
+      border-color:rgba(243,236,227,.16);
+      box-shadow:0 16px 36px rgba(0,0,0,.28);
+    }
+    html.dark .task-card.done{
+      opacity:.72;
+      background:rgba(28,24,20,.7);
+    }
+    html.dark .empty,
+    html.dark .family-empty{
+      background:rgba(243,236,227,.04);
+      border-color:rgba(243,236,227,.14);
+      color:var(--muted);
+    }
+    html.dark .check-btn{
+      background:rgba(243,236,227,.08);
+      border-color:rgba(243,236,227,.16);
+    }
+    html.dark .task-card.done .check-btn{
+      background:rgba(143,191,176,.22);
+      border-color:rgba(143,191,176,.3);
+    }
+    html.dark label{
+      color:rgba(243,236,227,.82);
+    }
+    html.dark input,
+    html.dark select,
+    html.dark textarea{
+      background:rgba(243,236,227,.07);
+      color:var(--ink);
+      box-shadow:inset 0 0 0 1px rgba(243,236,227,.12);
+    }
+    html.dark input:focus,
+    html.dark select:focus,
+    html.dark textarea:focus{
+      background:rgba(243,236,227,.1);
+      box-shadow:inset 0 0 0 2px rgba(143,191,176,.35), 0 0 0 6px rgba(143,191,176,.08);
+    }
+    html.dark .search input,
+    html.dark input.search{
+      background:rgba(243,236,227,.07);
+    }
+
+    /* Family member list + family task board */
+    html.dark .family-member{
+      background:rgba(36,31,26,.9);
+      border-color:rgba(243,236,227,.1);
+    }
+    html.dark .family-member-name{
+      color:var(--ink);
+    }
+    html.dark .family-member-count{
+      color:var(--muted);
+    }
+    html.dark .family-task{
+      background:rgba(36,31,26,.9);
+      border-color:rgba(243,236,227,.1);
+    }
+    html.dark .family-task.done{
+      opacity:.72;
+    }
+    html.dark .family-panel,
+    html.dark .family-grid .panel{
+      background:linear-gradient(180deg, rgba(36,31,26,.9), rgba(28,24,20,.86));
+      border-color:rgba(243,236,227,.08);
+    }
+    html.dark .family-filter select,
+    html.dark .family-filter input{
+      background:rgba(243,236,227,.07);
+      box-shadow:inset 0 0 0 1px rgba(243,236,227,.12);
+      color:var(--ink);
+    }
+
+    /* Calendar day overview */
+    html.dark .day-panel{
+      background:linear-gradient(180deg, rgba(36,31,26,.9), rgba(28,24,20,.86));
+      border-color:rgba(243,236,227,.08);
+    }
+    html.dark .day-item{
+      background:rgba(36,31,26,.92);
+      border-color:rgba(243,236,227,.1);
+    }
+    html.dark .cal-day{
+      background:rgba(243,236,227,.04);
+      border-color:rgba(243,236,227,.1);
+    }
+    html.dark .cal-day:hover{
+      border-color:rgba(196,137,90,.35);
+      background:rgba(243,236,227,.07);
+    }
+    html.dark .cal-day.today{
+      border-color:rgba(143,191,176,.4);
+      box-shadow:inset 0 0 0 1px rgba(143,191,176,.18);
+    }
+    html.dark .cal-day.selected{
+      background:rgba(143,191,176,.12);
+      border-color:rgba(143,191,176,.35);
+    }
+    html.dark .cal-chip.task{
+      background:rgba(196,137,90,.18);
+      color:var(--accent);
+    }
+    html.dark .cal-chip.event{
+      background:rgba(143,191,176,.16);
+      color:var(--accent-2);
+    }
+    html.dark .cal-chip.holiday{
+      background:rgba(224,138,122,.16);
+      color:var(--danger);
+    }
+
+    /* PIN modal */
+    html.dark .pin-modal-overlay{
+      background:rgba(8,6,5,.72);
+    }
+    html.dark .pin-modal{
+      background:linear-gradient(180deg, rgba(36,31,26,.97), rgba(24,20,16,.96));
+      border:1px solid rgba(243,236,227,.12);
+      box-shadow:0 28px 60px rgba(0,0,0,.5);
+      color:var(--ink);
+    }
+    html.dark .pin-modal h3{
+      color:var(--ink);
+    }
+    html.dark .pin-modal p{
+      color:var(--muted);
+    }
+    html.dark .pin-modal input[type="password"],
+    html.dark .pin-modal input[type="text"]{
+      background:rgba(243,236,227,.08);
+      color:var(--ink);
+      box-shadow:inset 0 0 0 1px rgba(243,236,227,.14);
+    }
+    html.dark .pin-modal input:focus{
+      box-shadow:inset 0 0 0 2px rgba(143,191,176,.35), 0 0 0 6px rgba(143,191,176,.08);
+      background:rgba(243,236,227,.1);
+    }
+    html.dark .pin-error{
+      color:var(--danger);
+      background:rgba(224,138,122,.12);
+      border-color:rgba(224,138,122,.22);
+    }
+    html.dark .priority,
+    html.dark .meta-chip,
+    html.dark .tag,
+    html.dark .task-meta span{
+      background:rgba(243,236,227,.08);
+      border-color:rgba(243,236,227,.12);
+    }
+    html.dark .summary-chip{
+      background:rgba(143,191,176,.14);
+      color:var(--accent-2);
+      border-color:rgba(143,191,176,.2);
+    }
+    html.dark .summary-shell{
+      background:rgba(28,24,20,.88);
+      border-color:rgba(243,236,227,.1);
+    }
+    html.dark .stat{
+      background:rgba(36,31,26,.9);
+      border-color:rgba(243,236,227,.08);
+    }
+
+
+    /* Softer buttons in dark mode */
+    html.dark .btn-primary{
+      background:rgba(196,137,90,.88);
+      color:#1c1814;
+      box-shadow:0 14px 28px rgba(0,0,0,.28);
+    }
+    html.dark .btn-primary:hover{
+      background:rgba(212,158,112,.95);
+      color:#14110e;
+      box-shadow:0 18px 32px rgba(0,0,0,.32);
+    }
+    html.dark .btn-soft{
+      background:rgba(243,236,227,.08);
+      color:var(--ink);
+      border:1px solid rgba(243,236,227,.14);
+      box-shadow:none;
+    }
+    html.dark .btn-soft:hover{
+      background:rgba(243,236,227,.14);
+      border-color:rgba(243,236,227,.22);
+      box-shadow:0 12px 28px rgba(0,0,0,.22);
+    }
+    html.dark .btn-danger{
+      background:rgba(224,138,122,.12);
+      color:var(--danger);
+      border:1px solid rgba(224,138,122,.22);
+    }
+    html.dark .btn-danger:hover{
+      background:rgba(224,138,122,.18);
+    }
+    html.dark .settings-tabs{
+      background:rgba(243,236,227,.05);
+      border-color:rgba(243,236,227,.1);
+    }
+    html.dark .settings-tab{
+      color:rgba(243,236,227,.55);
+      background:transparent;
+    }
+    html.dark .settings-tab:hover{
+      color:rgba(243,236,227,.8);
+      background:rgba(243,236,227,.06);
+    }
+    html.dark .settings-tab.active{
+      background:rgba(196,137,90,.28);
+      color:rgba(243,236,227,.92);
+      box-shadow:none;
+    }
+    html.dark .settings-tab.active:hover{
+      background:rgba(196,137,90,.34);
+      color:rgba(243,236,227,.95);
+    }
+    html.dark .theme-swatch.active{
+      border-color:rgba(143,191,176,.45);
+      box-shadow:0 12px 28px rgba(0,0,0,.25);
+    }
+    html.dark .toggle-slider{
+      background:rgba(243,236,227,.18);
+    }
+
+
     /* Study Ledger for Families */
     .families-page{
       display:none;
@@ -1001,7 +1297,266 @@
     }
     .pin-error.visible{display:block}
 
+
+    /* Settings tabs */
+    .settings-tabs{
+      display:inline-flex;
+      flex-wrap:wrap;
+      gap:.45rem;
+      padding:.35rem;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.45);
+      margin-bottom:1.25rem;
+    }
+    html.dark .settings-tabs{background:rgba(255,255,255,.06)}
+    .settings-tab{
+      border:none;
+      border-radius:999px;
+      padding:.7rem 1.05rem;
+      background:transparent;
+      color:var(--muted);
+      font-weight:800;
+      font-size:.92rem;
+    }
+    .settings-tab.active{
+      background:var(--ink);
+      color:#fff;
+      box-shadow:0 12px 24px rgba(29,26,23,.16);
+    }
+    /* settings-tab.active color handled in softer dark button rules */
+    .settings-panel{display:none}
+    .settings-panel.active{display:block}
+
+    /* Calendar page */
+    .calendar-page{
+      display:none;
+      padding:2rem 0 4rem;
+    }
+    .calendar-page.active{display:block}
+    .calendar-header{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:1rem;
+      flex-wrap:wrap;
+      margin-bottom:1.25rem;
+    }
+    .calendar-title{
+      font-size:clamp(3rem,7vw,5.5rem);
+      max-width:12ch;
+    }
+    .calendar-nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.65rem;
+      align-items:center;
+    }
+    .calendar-month-label{
+      font-weight:800;
+      min-width:10ch;
+      text-align:center;
+    }
+    .calendar-layout{
+      display:grid;
+      grid-template-columns:1.4fr .9fr;
+      gap:1.2rem;
+      align-items:start;
+    }
+    @media (max-width:1020px){
+      .calendar-layout{grid-template-columns:1fr}
+    }
+    .cal-grid{
+      display:grid;
+      grid-template-columns:repeat(7,1fr);
+      gap:.45rem;
+    }
+    .cal-dow{
+      text-align:center;
+      font-size:.78rem;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+      color:var(--muted);
+      padding:.4rem 0;
+    }
+    .cal-day{
+      min-height:92px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.5);
+      padding:.45rem;
+      text-align:left;
+      display:flex;
+      flex-direction:column;
+      gap:.25rem;
+      transition:transform .2s ease, border-color .2s ease, background .2s ease;
+    }
+    html.dark .cal-day{background:rgba(255,255,255,.04)}
+    .cal-day:hover{
+      transform:translateY(-1px);
+      border-color:rgba(139,94,52,.28);
+    }
+    .cal-day.outside{opacity:.42}
+    .cal-day.today{
+      border-color:rgba(49,89,77,.45);
+      box-shadow:inset 0 0 0 1px rgba(49,89,77,.2);
+    }
+    .cal-day.selected{
+      background:rgba(49,89,77,.1);
+      border-color:rgba(49,89,77,.4);
+    }
+    .cal-day-num{
+      font-weight:800;
+      font-size:.9rem;
+    }
+    .cal-dot-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.2rem;
+      margin-top:auto;
+    }
+    .cal-dot{
+      width:7px;height:7px;border-radius:50%;
+    }
+    .cal-dot.task{background:var(--accent)}
+    .cal-dot.event{background:var(--accent-2)}
+    .cal-dot.holiday{background:var(--danger)}
+    .cal-chip{
+      font-size:.65rem;
+      font-weight:800;
+      border-radius:999px;
+      padding:.12rem .35rem;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:100%;
+    }
+    .cal-chip.task{background:rgba(139,94,52,.12);color:var(--accent)}
+    .cal-chip.event{background:rgba(49,89,77,.12);color:var(--accent-2)}
+    .cal-chip.holiday{background:rgba(167,74,59,.12);color:var(--danger)}
+    .day-panel{padding:1.15rem}
+    .day-list{display:grid;gap:.65rem;margin-top:1rem;min-height:120px}
+    .day-item{
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      gap:.75rem;
+      align-items:start;
+      padding:.85rem;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.55);
+    }
+    html.dark .day-item{background:rgba(255,255,255,.05)}
+    .theme-swatches{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:.85rem;
+      margin-top:1rem;
+    }
+    @media (max-width:560px){.theme-swatches{grid-template-columns:1fr}}
+    .theme-swatch{
+      border-radius:20px;
+      border:1px solid var(--line);
+      padding:.9rem;
+      text-align:left;
+      background:transparent;
+      color:var(--ink);
+    }
+    .theme-swatch.active{
+      border-color:var(--accent-2);
+      box-shadow:0 12px 28px rgba(49,89,77,.12);
+    }
+    .theme-swatch strong{display:block;margin-bottom:.35rem}
+
+
+    .nav-cal-link{
+      border:none;
+      background:transparent;
+      color:inherit;
+      font:inherit;
+      padding:.2rem 0;
+      position:relative;
+    }
+    .nav-cal-link::after{
+      content:"";
+      position:absolute;
+      left:0;bottom:-.08rem;
+      width:100%;height:1px;
+      background:var(--ink);
+      transform:scaleX(0);
+      transform-origin:right;
+      transition:transform .28s ease;
+    }
+    .nav-cal-link:hover::after{
+      transform:scaleX(1);
+      transform-origin:left;
+    }
+
+
+    html.dark #bannerDismissBtn{
+      background:rgba(243,236,227,.08);
+      border-color:rgba(243,236,227,.16);
+      color:var(--ink);
+    }
+    html.dark #bannerDismissBtn:hover{
+      background:rgba(243,236,227,.14);
+    }
+    #bannerDismissBtn:hover{
+      background:rgba(255,255,255,.8);
+    }
+
+
+    .settings-select{
+      border:none;
+      border-radius:14px;
+      padding:.85rem 1rem;
+      background:rgba(251,248,242,.85);
+      box-shadow:inset 0 0 0 1px var(--line);
+      color:var(--ink);
+      max-width:100%;
+      color-scheme:light;
+      appearance:auto;
+    }
+    html.dark .settings-select,
+    html.dark select#weekStartSelect,
+    html.dark select#regionSelect{
+      background:rgba(36,31,26,.95) !important;
+      box-shadow:inset 0 0 0 1px rgba(243,236,227,.16) !important;
+      color:rgba(243,236,227,.92) !important;
+      color-scheme:dark;
+      border:1px solid rgba(243,236,227,.12);
+    }
+    html.dark .settings-select:hover,
+    html.dark .settings-select:focus,
+    html.dark select#weekStartSelect:hover,
+    html.dark select#regionSelect:hover,
+    html.dark select#weekStartSelect:focus,
+    html.dark select#regionSelect:focus{
+      background:rgba(42,36,30,.98) !important;
+      outline:none;
+      box-shadow:inset 0 0 0 1px rgba(143,191,176,.35), 0 0 0 4px rgba(143,191,176,.1) !important;
+      border-color:rgba(143,191,176,.3);
+    }
+    html.dark .settings-select option,
+    html.dark select#weekStartSelect option,
+    html.dark select#regionSelect option{
+      background:#1c1814;
+      color:#f3ece3;
+    }
+    html.dark .settings-section{
+      background:linear-gradient(180deg, rgba(36,31,26,.88), rgba(28,24,20,.82));
+      border-color:rgba(243,236,227,.08);
+      box-shadow:0 18px 40px rgba(0,0,0,.28);
+    }
+    html.dark .settings-row + .settings-row{
+      border-top-color:rgba(243,236,227,.1);
+    }
+
   </style>
+<script>
+(function(){try{if(localStorage.getItem('study-ledger-theme')==='dark')document.documentElement.classList.add('dark');}catch(e){}})();
+</script>
 </head>
 <body>
   <header class="topbar">
@@ -1014,6 +1569,7 @@
         <a href="#planner">Planner</a>
         <a href="#tasks">Tasks</a>
         <a href="#summary">Summary</a>
+        <button type="button" id="navCalendarBtn" class="nav-cal-link">Calendar</button>
       </nav>
       <div style="display:flex;align-items:center;gap:.65rem;flex-wrap:wrap;">
         <button class="btn btn-soft" id="settingsBtn" type="button">Settings</button>
@@ -1021,6 +1577,27 @@
       </div>
     </div>
   </header>
+
+  <div id="calendarBanner" style="
+    position:sticky;top:64px;z-index:25;
+    background:linear-gradient(90deg, rgba(49,89,77,.12), rgba(139,94,52,.12));
+    border-bottom:1px solid var(--line);
+    backdrop-filter:blur(10px);
+  ">
+    <div class="wrap" style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between;padding:.75rem 0;">
+      <div style="font-weight:800;font-size:.95rem;">📅 Calendar is available — due tasks, events, and holidays.</div>
+      <div style="display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;">
+        <button type="button" class="btn btn-primary" id="bannerCalendarBtn" style="padding:.65rem 1rem;font-size:.9rem;">Open calendar</button>
+        <button type="button" class="btn btn-soft" id="bannerSettingsCalBtn" style="padding:.65rem 1rem;font-size:.9rem;">Calendar settings</button>
+        <button type="button" id="bannerDismissBtn" aria-label="Dismiss calendar notice" title="Dismiss" style="
+          width:36px;height:36px;border-radius:999px;border:1px solid var(--line);
+          background:rgba(255,255,255,.45);color:var(--ink);font-size:1.15rem;line-height:1;
+          display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;
+        ">×</button>
+      </div>
+    </div>
+  </div>
+
 
   <main id="top">
     <section class="hero">
@@ -1044,7 +1621,7 @@
     margin-bottom:1rem;
     white-space:nowrap;
   ">
-    v1.1.1
+    v1.2
   </span>
 </div>
 
@@ -1063,6 +1640,7 @@
           <div class="hero-actions">
             <a href="#planner" class="btn btn-primary">Add task</a>
             <a href="#tasks" class="btn btn-soft">View task board</a>
+            <button class="btn btn-soft" id="viewCalendarBtn" type="button">View calendar</button>
           </div>
         </div>
 
@@ -1345,6 +1923,80 @@
     </div>
   </main>
 
+  
+  <main id="calendarPage" class="calendar-page" aria-labelledby="calendarTitle">
+    <div class="wrap">
+      <div class="calendar-header">
+        <div>
+          <div class="eyebrow">Planning</div>
+          <h1 id="calendarTitle" class="calendar-title">Calendar</h1>
+          <p class="family-subtitle">See due tasks, holidays, and events in one place. Click a day to add an event or review what is coming up.</p>
+        </div>
+        <div class="calendar-nav">
+          <button class="btn btn-soft" type="button" id="calPrev">← Prev</button>
+          <div class="calendar-month-label" id="calMonthLabel">Month</div>
+          <button class="btn btn-soft" type="button" id="calNext">Next →</button>
+          <button class="btn btn-soft" type="button" id="calToday">Today</button>
+          <button class="btn btn-soft" type="button" id="calBackBtn">← Back</button>
+        </div>
+      </div>
+
+      <div class="calendar-layout">
+        <section class="panel board" style="padding:1.15rem;">
+          <div class="cal-grid" id="calDow"></div>
+          <div class="cal-grid" id="calGrid" style="margin-top:.35rem;"></div>
+          <p class="section-note" style="margin-top:1rem;">Dots: brown = tasks, green = events, red = holidays.</p>
+        </section>
+
+        <section class="panel day-panel" aria-labelledby="dayPanelTitle">
+          <h2 id="dayPanelTitle" style="font-size:1.85rem;">Selected day</h2>
+          <p id="dayPanelDate" style="color:var(--muted);margin-top:.35rem;">Pick a day on the calendar.</p>
+
+          <form id="eventForm" class="form-grid" style="margin-top:1rem;">
+            <div class="field">
+              <label for="eventTitle">Add event</label>
+              <input id="eventTitle" type="text" placeholder="e.g. Study group" required />
+            </div>
+            <div class="field">
+              <label class="check" style="display:flex;align-items:center;gap:.55rem;margin-top:.35rem;">
+                <input type="checkbox" id="eventAllDay" checked />
+                <span>All day</span>
+              </label>
+            </div>
+            <div class="field" id="eventTimeField" style="display:none;">
+              <label for="eventTime">Time</label>
+              <input id="eventTime" type="time" value="09:00" />
+            </div>
+            <div class="field">
+              <label for="eventRepeat">Repeat</label>
+              <select id="eventRepeat">
+                <option value="none">Does not repeat</option>
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="fortnightly">Every 2 weeks</option>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+              </select>
+            </div>
+            <div class="field" id="eventRepeatUntilField" style="display:none;">
+              <label for="eventRepeatUntil">Repeat until (optional)</label>
+              <input id="eventRepeatUntil" type="date" />
+            </div>
+            <div class="field">
+              <label for="eventNotes">Notes</label>
+              <textarea id="eventNotes" placeholder="Optional details"></textarea>
+            </div>
+            <div class="actions">
+              <button class="btn btn-primary" type="submit">Save event</button>
+            </div>
+          </form>
+
+          <div class="day-list" id="dayList" aria-live="polite"></div>
+        </section>
+      </div>
+    </div>
+  </main>
+
   <main id="settingsPage" class="settings-page" aria-labelledby="settingsTitle">
     <div class="wrap">
       <div class="settings-header">
@@ -1352,12 +2004,19 @@
           <div class="eyebrow">Preferences</div>
           <h1 id="settingsTitle" class="settings-title">Settings</h1>
           <p class="settings-subtitle">
-            Manage app options. Turn Families mode on or off from here.
+            Manage families, appearance, and calendar preferences.
           </p>
         </div>
         <button class="btn btn-soft" id="closeSettingsBtn" type="button">← Back</button>
       </div>
 
+      <div class="settings-tabs" id="settingsTabs" role="tablist" aria-label="Settings sections">
+        <button type="button" class="settings-tab active" data-settings-tab="families" role="tab" aria-selected="true">Families</button>
+        <button type="button" class="settings-tab" data-settings-tab="personalization" role="tab" aria-selected="false">Personalization</button>
+        <button type="button" class="settings-tab" data-settings-tab="calendar" role="tab" aria-selected="false">Calendar</button>
+      </div>
+
+      <div class="settings-panel active" id="settingsPanelFamilies" data-settings-panel="families">
       <section class="settings-section" aria-labelledby="familiesSettingsHeading">
         <h2 id="familiesSettingsHeading">Study Ledger for Families</h2>
         <p>
@@ -1399,6 +2058,74 @@
           <div class="family-members" id="familyMembersList"></div>
         </div>
       </section>
+      </div><!-- end families panel -->
+
+      <div class="settings-panel" id="settingsPanelPersonalization" data-settings-panel="personalization">
+        <section class="settings-section" aria-labelledby="personalizationHeading">
+          <h2 id="personalizationHeading">Personalization</h2>
+          <p>Tune how Study Ledger looks on this device. Your choice is saved in the browser.</p>
+          <div class="settings-row">
+            <div class="settings-row-label">
+              <strong>Dark mode</strong>
+              <span id="darkModeHint">Off — daylight paper is active</span>
+            </div>
+            <label class="toggle-switch" aria-label="Enable dark mode">
+              <input type="checkbox" id="darkModeToggle" />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="theme-swatches">
+            <button type="button" class="theme-swatch active" id="themeLightBtn" data-theme="light">
+              <strong>Daylight</strong>
+              <span style="color:var(--muted);font-size:.88rem;">Warm paper ledger</span>
+            </button>
+            <button type="button" class="theme-swatch" id="themeDarkBtn" data-theme="dark">
+              <strong>Evening</strong>
+              <span style="color:var(--muted);font-size:.88rem;">Warm charcoal palette</span>
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <div class="settings-panel" id="settingsPanelCalendar" data-settings-panel="calendar">
+        <section class="settings-section" aria-labelledby="calendarSettingsHeading">
+          <h2 id="calendarSettingsHeading">Calendar</h2>
+          <p>Choose how your week starts and which country’s holidays and observations appear on the calendar.</p>
+          <div class="settings-row">
+            <div class="settings-row-label">
+              <strong>First day of the week</strong>
+              <span>Controls the calendar grid order.</span>
+            </div>
+            <select id="weekStartSelect" class="settings-select" style="max-width:220px;">
+              <option value="0">Sunday</option>
+              <option value="1">Monday</option>
+              <option value="6">Saturday</option>
+            </select>
+          </div>
+          <div class="settings-row">
+            <div class="settings-row-label">
+              <strong>Country or region</strong>
+              <span id="regionHint">Holidays for the selected region show on the calendar.</span>
+            </div>
+            <select id="regionSelect" class="settings-select" style="max-width:280px;">
+              <option value="">None</option>
+              <option value="US">United States</option>
+              <option value="CA">Canada</option>
+              <option value="GB">United Kingdom</option>
+              <option value="AU">Australia</option>
+              <option value="NZ">New Zealand</option>
+              <option value="IE">Ireland</option>
+              <option value="DE">Germany</option>
+              <option value="FR">France</option>
+              <option value="IN">India</option>
+              <option value="JP">Japan</option>
+              <option value="MX">Mexico</option>
+              <option value="BR">Brazil</option>
+            </select>
+          </div>
+        </section>
+      </div>
+
     </div>
   </main>
 
@@ -1902,6 +2629,8 @@ function hideAllViews(){
   document.querySelector('footer.footer').style.display = 'none';
   familiesPage.classList.remove('active');
   settingsPage.classList.remove('active');
+  const cal = document.getElementById('calendarPage');
+  if(cal) cal.classList.remove('active');
 }
 
 function showMainLedger(){
@@ -2438,6 +3167,631 @@ for(let i = 1; i <= 31; i++){
   monthlyDaySelect.appendChild(option);
 }
 renderTasks();
+  
+// ---- Personalization, Calendar, Settings tabs ----
+(function(){
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const darkModeHint = document.getElementById('darkModeHint');
+  const themeLightBtn = document.getElementById('themeLightBtn');
+  const themeDarkBtn = document.getElementById('themeDarkBtn');
+  const weekStartSelect = document.getElementById('weekStartSelect');
+  const regionSelect = document.getElementById('regionSelect');
+  const regionHint = document.getElementById('regionHint');
+  const viewCalendarBtn = document.getElementById('viewCalendarBtn');
+  const calendarPage = document.getElementById('calendarPage');
+  const calGrid = document.getElementById('calGrid');
+  const calDow = document.getElementById('calDow');
+  const calMonthLabel = document.getElementById('calMonthLabel');
+  const calPrev = document.getElementById('calPrev');
+  const calNext = document.getElementById('calNext');
+  const calToday = document.getElementById('calToday');
+  const calBackBtn = document.getElementById('calBackBtn');
+  const dayPanelDate = document.getElementById('dayPanelDate');
+  const dayList = document.getElementById('dayList');
+  const eventForm = document.getElementById('eventForm');
+  const eventTitle = document.getElementById('eventTitle');
+  const eventNotes = document.getElementById('eventNotes');
+  const eventAllDay = document.getElementById('eventAllDay');
+  const eventTime = document.getElementById('eventTime');
+  const eventTimeField = document.getElementById('eventTimeField');
+  const eventRepeat = document.getElementById('eventRepeat');
+  const eventRepeatUntil = document.getElementById('eventRepeatUntil');
+  const eventRepeatUntilField = document.getElementById('eventRepeatUntilField');
+
+  function syncEventFormFields(){
+    if(eventTimeField) eventTimeField.style.display = eventAllDay && eventAllDay.checked ? 'none' : '';
+    if(eventRepeatUntilField) eventRepeatUntilField.style.display = eventRepeat && eventRepeat.value !== 'none' ? '' : 'none';
+  }
+  if(eventAllDay) eventAllDay.addEventListener('change', syncEventFormFields);
+  if(eventRepeat) eventRepeat.addEventListener('change', syncEventFormFields);
+  syncEventFormFields();
+
+  let calendarEvents = JSON.parse(localStorage.getItem('study-ledger-events') || '[]');
+  let weekStartsOn = Number(localStorage.getItem('study-ledger-week-start') || '0');
+  let calendarRegion = localStorage.getItem('study-ledger-region') || '';
+  let darkMode = localStorage.getItem('study-ledger-theme') === 'dark';
+  let calCursor = new Date();
+  calCursor.setDate(1);
+  calCursor.setHours(0,0,0,0);
+  let selectedISO = toISO(new Date());
+
+  function toISO(d){
+    const y = d.getFullYear();
+    const m = String(d.getMonth()+1).padStart(2,'0');
+    const day = String(d.getDate()).padStart(2,'0');
+    return y + '-' + m + '-' + day;
+  }
+  function parseISO(s){
+    const [y,m,d] = s.split('-').map(Number);
+    return new Date(y, m-1, d);
+  }
+  function saveEvents(){
+    localStorage.setItem('study-ledger-events', JSON.stringify(calendarEvents));
+  }
+
+  function applyTheme(isDark){
+    darkMode = isDark;
+    document.documentElement.classList.toggle('dark', isDark);
+    localStorage.setItem('study-ledger-theme', isDark ? 'dark' : 'light');
+    if(darkModeToggle) darkModeToggle.checked = isDark;
+    if(darkModeHint) darkModeHint.textContent = isDark ? 'On — evening palette is active' : 'Off — daylight paper is active';
+    if(themeLightBtn) themeLightBtn.classList.toggle('active', !isDark);
+    if(themeDarkBtn) themeDarkBtn.classList.toggle('active', isDark);
+  }
+  applyTheme(darkMode);
+
+  // FOUC already handled if class set early - add boot if missing
+  if(darkModeToggle){
+    darkModeToggle.addEventListener('change', () => applyTheme(darkModeToggle.checked));
+  }
+  if(themeLightBtn) themeLightBtn.addEventListener('click', () => applyTheme(false));
+  if(themeDarkBtn) themeDarkBtn.addEventListener('click', () => applyTheme(true));
+
+  // Settings tabs
+  const settingsTabs = document.querySelectorAll('[data-settings-tab]');
+  function showSettingsTab(name){
+    settingsTabs.forEach(btn => {
+      const on = btn.dataset.settingsTab === name;
+      btn.classList.toggle('active', on);
+      btn.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+    document.querySelectorAll('[data-settings-panel]').forEach(panel => {
+      panel.classList.toggle('active', panel.dataset.settingsPanel === name);
+    });
+  }
+  settingsTabs.forEach(btn => {
+    btn.addEventListener('click', () => showSettingsTab(btn.dataset.settingsTab));
+  });
+
+  // Week start + region
+  if(weekStartSelect){
+    weekStartSelect.value = String(weekStartsOn);
+    weekStartSelect.addEventListener('change', () => {
+      weekStartsOn = Number(weekStartSelect.value);
+      localStorage.setItem('study-ledger-week-start', String(weekStartsOn));
+      renderCalendar();
+    });
+  }
+  if(regionSelect){
+    regionSelect.value = calendarRegion;
+    regionSelect.addEventListener('change', () => {
+      calendarRegion = regionSelect.value;
+      localStorage.setItem('study-ledger-region', calendarRegion);
+      if(regionHint){
+        regionHint.textContent = calendarRegion
+          ? ('Showing holidays for ' + regionSelect.options[regionSelect.selectedIndex].text)
+          : 'No regional holidays selected.';
+      }
+      renderCalendar();
+      renderDayPanel();
+    });
+  }
+
+  // Navigation helpers
+  const originalHideAll = typeof hideAllViews === 'function' ? hideAllViews : null;
+  function hideEverything(){
+    const topbar = document.querySelector('header.topbar');
+    const mainTop = document.querySelector('main#top');
+    const footer = document.querySelector('footer.footer');
+    if(topbar) topbar.style.display = 'none';
+    if(mainTop) mainTop.style.display = 'none';
+    if(footer) footer.style.display = 'none';
+    if(familiesPage) familiesPage.classList.remove('active');
+    if(settingsPage) settingsPage.classList.remove('active');
+    if(calendarPage) calendarPage.classList.remove('active');
+  }
+
+  // Patch showSettingsPage / showMainLedger if they exist later - hook buttons
+  function showCalendarPage(){
+    hideEverything();
+    calendarPage.classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+    renderCalendar();
+    renderDayPanel();
+  }
+
+  const navCalendarBtn = document.getElementById('navCalendarBtn');
+  if(viewCalendarBtn){
+    viewCalendarBtn.addEventListener('click', showCalendarPage);
+  }
+  if(navCalendarBtn){
+    navCalendarBtn.addEventListener('click', showCalendarPage);
+  }
+
+  const bannerCalendarBtn = document.getElementById('bannerCalendarBtn');
+  const bannerSettingsCalBtn = document.getElementById('bannerSettingsCalBtn');
+  const bannerDismissBtn = document.getElementById('bannerDismissBtn');
+  const calendarBanner = document.getElementById('calendarBanner');
+  function dismissCalendarBanner(){
+    if(calendarBanner) calendarBanner.style.display = 'none';
+    try{ localStorage.setItem('study-ledger-calendar-banner-dismissed', 'true'); }catch(e){}
+  }
+  if(calendarBanner && localStorage.getItem('study-ledger-calendar-banner-dismissed') === 'true'){
+    calendarBanner.style.display = 'none';
+  }
+  if(bannerDismissBtn) bannerDismissBtn.addEventListener('click', dismissCalendarBanner);
+  if(bannerCalendarBtn) bannerCalendarBtn.addEventListener('click', showCalendarPage);
+  if(bannerSettingsCalBtn) bannerSettingsCalBtn.addEventListener('click', () => {
+    if(typeof openSettings === 'function') openSettings();
+    else if(typeof showSettingsPage === 'function') showSettingsPage();
+    else {
+      const sb = document.getElementById('settingsBtn');
+      if(sb) sb.click();
+    }
+    setTimeout(() => {
+      const tab = document.querySelector('[data-settings-tab="calendar"]');
+      if(tab) tab.click();
+    }, 50);
+  });
+
+  if(calBackBtn){
+    calBackBtn.addEventListener('click', () => {
+      if(typeof showMainLedger === 'function') showMainLedger();
+      else {
+        hideEverything();
+        document.querySelector('header.topbar').style.display = '';
+        document.querySelector('main#top').style.display = '';
+        document.querySelector('footer.footer').style.display = '';
+      }
+    });
+  }
+
+  // Holidays (fixed + simple observed dates for current year range)
+  function nthWeekday(year, month, weekday, n){
+    // n: 1-5 or -1 for last
+    if(n > 0){
+      let d = new Date(year, month, 1);
+      let count = 0;
+      while(d.getMonth() === month){
+        if(d.getDay() === weekday){
+          count++;
+          if(count === n) return toISO(d);
+        }
+        d.setDate(d.getDate()+1);
+      }
+    } else {
+      let d = new Date(year, month+1, 0);
+      while(d.getMonth() === month){
+        if(d.getDay() === weekday) return toISO(d);
+        d.setDate(d.getDate()-1);
+      }
+    }
+    return null;
+  }
+
+  function easterSunday(year){
+    // Anonymous Gregorian algorithm
+    const a = year % 19;
+    const b = Math.floor(year / 100);
+    const c = year % 100;
+    const d = Math.floor(b / 4);
+    const e = b % 4;
+    const f = Math.floor((b + 8) / 25);
+    const g = Math.floor((b - f + 1) / 3);
+    const h = (19 * a + b - d - g + 15) % 30;
+    const i = Math.floor(c / 4);
+    const k = c % 4;
+    const l = (32 + 2 * e + 2 * i - h - k) % 7;
+    const m = Math.floor((a + 11 * h + 22 * l) / 451);
+    const month = Math.floor((h + l - 7 * m + 114) / 31);
+    const day = ((h + l - 7 * m + 114) % 31) + 1;
+    return new Date(year, month - 1, day);
+  }
+
+  function holidaysForYear(region, year){
+    const list = [];
+    const add = (iso, name) => list.push({date: iso, name: name});
+    const fixed = (m, d, name) => add(toISO(new Date(year, m-1, d)), name);
+    const easter = easterSunday(year);
+    const easterISO = toISO(easter);
+    const addDays = (date, n) => {
+      const x = new Date(date.getTime());
+      x.setDate(x.getDate()+n);
+      return toISO(x);
+    };
+
+    if(region === 'US'){
+      fixed(1,1,'New Year’s Day');
+      add(nthWeekday(year,0,1,3),'Martin Luther King Jr. Day');
+      add(nthWeekday(year,1,1,3),"Presidents’ Day");
+      add(nthWeekday(year,4,1,-1),'Memorial Day');
+      fixed(6,19,'Juneteenth');
+      fixed(7,4,'Independence Day');
+      add(nthWeekday(year,8,1,1),'Labor Day');
+      add(nthWeekday(year,9,1,2),'Columbus Day');
+      fixed(11,11,'Veterans Day');
+      add(nthWeekday(year,10,4,4),'Thanksgiving');
+      fixed(12,25,'Christmas Day');
+    } else if(region === 'CA'){
+      fixed(1,1,"New Year’s Day");
+      add(nthWeekday(year,1,1,3),'Family Day');
+      add(addDays(easter,-2),'Good Friday');
+      add(nthWeekday(year,4,1,-1),'Victoria Day');
+      fixed(7,1,'Canada Day');
+      add(nthWeekday(year,7,1,1),'Civic Holiday');
+      add(nthWeekday(year,8,1,1),'Labour Day');
+      add(nthWeekday(year,9,1,2),'Thanksgiving');
+      fixed(11,11,'Remembrance Day');
+      fixed(12,25,'Christmas Day');
+      fixed(12,26,'Boxing Day');
+    } else if(region === 'GB'){
+      fixed(1,1,"New Year’s Day");
+      add(addDays(easter,-2),'Good Friday');
+      add(addDays(easter,1),'Easter Monday');
+      add(nthWeekday(year,4,1,-1),'Early May Bank Holiday');
+      // last Monday of May
+      add(nthWeekday(year,4,1,-1) === toISO(new Date(year,4,1)) ? nthWeekday(year,4,1,-1) : nthWeekday(year,4,1,-1),'Spring Bank Holiday');
+      add(nthWeekday(year,7,1,-1),'Summer Bank Holiday');
+      fixed(12,25,'Christmas Day');
+      fixed(12,26,'Boxing Day');
+    } else if(region === 'AU'){
+      fixed(1,1,"New Year’s Day");
+      fixed(1,26,'Australia Day');
+      add(addDays(easter,-2),'Good Friday');
+      add(addDays(easter,1),'Easter Monday');
+      fixed(4,25,'ANZAC Day');
+      // Queen's/King's Birthday approx 2nd Mon June
+      add(nthWeekday(year,5,1,2),"King’s Birthday");
+      fixed(12,25,'Christmas Day');
+      fixed(12,26,'Boxing Day');
+    } else if(region === 'NZ'){
+      fixed(1,1,"New Year’s Day");
+      fixed(1,2,'Day after New Year’s Day');
+      fixed(2,6,'Waitangi Day');
+      add(addDays(easter,-2),'Good Friday');
+      add(addDays(easter,1),'Easter Monday');
+      fixed(4,25,'ANZAC Day');
+      add(nthWeekday(year,5,1,1),"King’s Birthday");
+      // Labour Day 4th Monday October
+      add(nthWeekday(year,9,1,4),'Labour Day');
+      fixed(12,25,'Christmas Day');
+      fixed(12,26,'Boxing Day');
+    } else if(region === 'IE'){
+      fixed(1,1,"New Year’s Day");
+      // St Patrick's
+      fixed(3,17,"St Patrick’s Day");
+      add(addDays(easter,1),'Easter Monday');
+      add(nthWeekday(year,4,1,1),'May Bank Holiday');
+      add(nthWeekday(year,5,1,1),'June Bank Holiday');
+      add(nthWeekday(year,7,1,1),'August Bank Holiday');
+      add(nthWeekday(year,9,1,-1),'October Bank Holiday');
+      fixed(12,25,'Christmas Day');
+      fixed(12,26,"St Stephen’s Day");
+    } else if(region === 'DE'){
+      fixed(1,1,"New Year’s Day");
+      add(addDays(easter,-2),'Good Friday');
+      add(addDays(easter,1),'Easter Monday');
+      fixed(5,1,'Labour Day');
+      add(addDays(easter,39),'Ascension Day');
+      add(addDays(easter,50),'Whit Monday');
+      fixed(10,3,'German Unity Day');
+      fixed(12,25,'Christmas Day');
+      fixed(12,26,'Second Christmas Day');
+    } else if(region === 'FR'){
+      fixed(1,1,"New Year’s Day");
+      add(addDays(easter,1),'Easter Monday');
+      fixed(5,1,'Labour Day');
+      fixed(5,8,'Victory in Europe Day');
+      add(addDays(easter,39),'Ascension Day');
+      add(addDays(easter,50),'Whit Monday');
+      fixed(7,14,'Bastille Day');
+      fixed(8,15,'Assumption');
+      fixed(11,1,'All Saints’ Day');
+      fixed(11,11,'Armistice Day');
+      fixed(12,25,'Christmas Day');
+    } else if(region === 'IN'){
+      fixed(1,26,'Republic Day');
+      fixed(8,15,'Independence Day');
+      fixed(10,2,'Gandhi Jayanti');
+      fixed(12,25,'Christmas Day');
+      // Diwali approx varies - skip variable lunar for simplicity
+      fixed(1,14,'Makar Sankranti');
+      fixed(3,8,'Holi (approx observed)');
+    } else if(region === 'JP'){
+      fixed(1,1,"New Year’s Day");
+      // Coming of Age 2nd Mon Jan
+      add(nthWeekday(year,0,1,2),'Coming of Age Day');
+      fixed(2,11,'National Foundation Day');
+      fixed(2,23,"Emperor’s Birthday");
+      fixed(4,29,'Showa Day');
+      fixed(5,3,'Constitution Memorial Day');
+      fixed(5,4,'Greenery Day');
+      fixed(5,5,"Children’s Day");
+      add(nthWeekday(year,6,1,3),'Marine Day');
+      fixed(8,11,'Mountain Day');
+      add(nthWeekday(year,8,1,3),'Respect for the Aged Day');
+      // Sports / Culture
+      add(nthWeekday(year,9,1,2),'Sports Day');
+      fixed(11,3,'Culture Day');
+      fixed(11,23,'Labor Thanksgiving Day');
+    } else if(region === 'MX'){
+      fixed(1,1,"New Year’s Day");
+      fixed(2,5,'Constitution Day');
+      fixed(3,21,'Benito Juárez’s Birthday');
+      fixed(5,1,'Labour Day');
+      fixed(9,16,'Independence Day');
+      fixed(11,20,'Revolution Day');
+      fixed(12,25,'Christmas Day');
+    } else if(region === 'BR'){
+      fixed(1,1,"New Year’s Day");
+      // Carnival Mon/Tue before Ash Wed = easter-48/-47
+      add(addDays(easter,-48),'Carnival');
+      add(addDays(easter,-2),'Good Friday');
+      fixed(4,21,'Tiradentes');
+      fixed(5,1,'Labour Day');
+      add(addDays(easter,60),'Corpus Christi');
+      fixed(9,7,'Independence Day');
+      fixed(10,12,'Our Lady of Aparecida');
+      fixed(11,2,'All Souls’ Day');
+      fixed(11,15,'Republic Proclamation Day');
+      fixed(12,25,'Christmas Day');
+    }
+    return list.filter(h => h.date && h.date.startsWith(String(year)));
+  }
+
+  function holidaysInRange(region, year){
+    if(!region) return [];
+    return holidaysForYear(region, year-1)
+      .concat(holidaysForYear(region, year))
+      .concat(holidaysForYear(region, year+1));
+  }
+
+  function eventOccursOn(e, iso){
+    if(!e || !e.date) return false;
+    if(e.date === iso) return true;
+    const rep = e.repeat || 'none';
+    if(rep === 'none') return false;
+    const start = parseISO(e.date);
+    const cur = parseISO(iso);
+    if(cur < start) return false;
+    if(e.repeatUntil){
+      const until = parseISO(e.repeatUntil);
+      if(cur > until) return false;
+    }
+    const diffDays = Math.round((cur - start) / 86400000);
+    if(rep === 'daily') return diffDays >= 0;
+    if(rep === 'weekly') return diffDays % 7 === 0;
+    if(rep === 'fortnightly') return diffDays % 14 === 0;
+    if(rep === 'monthly'){
+      return cur.getDate() === start.getDate() ||
+        (cur.getDate() === new Date(cur.getFullYear(), cur.getMonth()+1, 0).getDate() &&
+         start.getDate() > new Date(cur.getFullYear(), cur.getMonth()+1, 0).getDate());
+    }
+    if(rep === 'yearly'){
+      return cur.getMonth() === start.getMonth() && cur.getDate() === start.getDate();
+    }
+    return false;
+  }
+
+  function formatEventWhen(e){
+    if(e.allDay !== false && !e.time) return 'All day';
+    if(e.allDay) return 'All day';
+    if(e.time){
+      const [hh, mm] = e.time.split(':').map(Number);
+      const d = new Date();
+      d.setHours(hh||0, mm||0, 0, 0);
+      return d.toLocaleTimeString(undefined, {hour:'numeric', minute:'2-digit'});
+    }
+    return 'All day';
+  }
+
+  function formatRepeatLabel(rep){
+    const map = {none:'', daily:'Repeats daily', weekly:'Repeats weekly', fortnightly:'Repeats every 2 weeks', monthly:'Repeats monthly', yearly:'Repeats yearly'};
+    return map[rep] || '';
+  }
+
+  function itemsForDate(iso){
+    const dayTasks = (typeof tasks !== 'undefined' ? tasks : [])
+      .filter(t => t.dueDate === iso)
+      .map(t => ({kind:'task', id:t.id, title:t.title, done:!!t.done, meta:t.subject || t.type}));
+    const dayEvents = calendarEvents
+      .filter(e => eventOccursOn(e, iso))
+      .map(e => ({
+        kind:'event',
+        id:e.id,
+        title:e.title,
+        notes:e.notes || '',
+        allDay: e.allDay !== false && !e.time ? true : !!e.allDay,
+        time: e.time || '',
+        repeat: e.repeat || 'none',
+        when: formatEventWhen(e),
+        occurrenceDate: iso
+      }))
+      .sort((a,b) => {
+        if(a.allDay && !b.allDay) return -1;
+        if(!a.allDay && b.allDay) return 1;
+        return (a.time||'').localeCompare(b.time||'');
+      });
+    const dayHolidays = holidaysInRange(calendarRegion, Number(iso.slice(0,4)))
+      .filter(h => h.date === iso)
+      .map(h => ({kind:'holiday', id:h.date+h.name, title:h.name}));
+    return {dayTasks, dayEvents, dayHolidays};
+  }
+
+  function renderCalendar(){
+    if(!calGrid || !calDow) return;
+    const year = calCursor.getFullYear();
+    const month = calCursor.getMonth();
+    calMonthLabel.textContent = calCursor.toLocaleDateString(undefined, {month:'long', year:'numeric'});
+
+    const labels = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    const ordered = [];
+    for(let i=0;i<7;i++) ordered.push(labels[(weekStartsOn + i) % 7]);
+    calDow.innerHTML = ordered.map(l => `<div class="cal-dow">${l}</div>`).join('');
+
+    const first = new Date(year, month, 1);
+    const startPad = (first.getDay() - weekStartsOn + 7) % 7;
+    const gridStart = new Date(year, month, 1 - startPad);
+    const todayISO = toISO(new Date());
+    const cells = [];
+    for(let i=0;i<42;i++){
+      const d = new Date(gridStart.getFullYear(), gridStart.getMonth(), gridStart.getDate()+i);
+      const iso = toISO(d);
+      const inMonth = d.getMonth() === month;
+      const {dayTasks, dayEvents, dayHolidays} = itemsForDate(iso);
+      const chips = [];
+      dayHolidays.slice(0,1).forEach(h => chips.push(`<span class="cal-chip holiday">${escapeHTML(h.title)}</span>`));
+      dayTasks.slice(0,2).forEach(t => chips.push(`<span class="cal-chip task">${escapeHTML(t.title)}</span>`));
+      dayEvents.slice(0,2).forEach(e => chips.push(`<span class="cal-chip event">${escapeHTML(e.title)}</span>`));
+      const dots = [];
+      if(dayTasks.length) dots.push('<span class="cal-dot task"></span>');
+      if(dayEvents.length) dots.push('<span class="cal-dot event"></span>');
+      if(dayHolidays.length) dots.push('<span class="cal-dot holiday"></span>');
+      cells.push(`
+        <button type="button" class="cal-day ${inMonth?'':'outside'} ${iso===todayISO?'today':''} ${iso===selectedISO?'selected':''}" data-date="${iso}">
+          <span class="cal-day-num">${d.getDate()}</span>
+          ${chips.join('')}
+          <div class="cal-dot-row">${dots.join('')}</div>
+        </button>
+      `);
+    }
+    calGrid.innerHTML = cells.join('');
+    calGrid.querySelectorAll('.cal-day').forEach(btn => {
+      btn.addEventListener('click', () => {
+        selectedISO = btn.dataset.date;
+        renderCalendar();
+        renderDayPanel();
+      });
+    });
+  }
+
+  function renderDayPanel(){
+    if(!dayList || !dayPanelDate) return;
+    const d = parseISO(selectedISO);
+    dayPanelDate.textContent = d.toLocaleDateString(undefined, {weekday:'long', month:'long', day:'numeric', year:'numeric'});
+    const {dayTasks, dayEvents, dayHolidays} = itemsForDate(selectedISO);
+    const rows = [];
+    dayHolidays.forEach(h => {
+      rows.push(`<div class="day-item"><span class="cal-dot holiday" style="margin-top:.45rem"></span><div><strong>${escapeHTML(h.title)}</strong><div style="color:var(--muted);font-size:.88rem">Holiday / observation</div></div><span></span></div>`);
+    });
+    dayTasks.forEach(t => {
+      rows.push(`<div class="day-item"><span class="cal-dot task" style="margin-top:.45rem"></span><div><strong>${escapeHTML(t.title)}</strong><div style="color:var(--muted);font-size:.88rem">${t.done?'Completed task':'Task due'}${t.meta? ' · ' + escapeHTML(t.meta):''}</div></div><span></span></div>`);
+    });
+    dayEvents.forEach(e => {
+      {
+        const metaBits = [e.when];
+        const rl = formatRepeatLabel(e.repeat);
+        if(rl) metaBits.push(rl);
+        if(e.notes) metaBits.push(e.notes);
+        rows.push(`<div class="day-item"><span class="cal-dot event" style="margin-top:.45rem"></span><div><strong>${escapeHTML(e.title)}</strong><div style="color:var(--muted);font-size:.88rem">${escapeHTML(metaBits.join(' · '))}</div></div><button type="button" class="family-danger" data-del-event="${e.id}" title="Delete this series">Delete</button></div>`);
+      }
+    });
+    if(!rows.length){
+      dayList.innerHTML = `<div class="family-empty"><strong>Nothing on this day.</strong><p style="margin-top:.35rem">Add an event above, or create a task with this due date.</p></div>`;
+    } else {
+      dayList.innerHTML = rows.join('');
+      dayList.querySelectorAll('[data-del-event]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          calendarEvents = calendarEvents.filter(e => e.id !== btn.dataset.delEvent);
+          saveEvents();
+          renderCalendar();
+          renderDayPanel();
+        });
+      });
+    }
+  }
+
+  if(eventForm){
+    eventForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const title = eventTitle.value.trim();
+      if(!title || !selectedISO) return;
+      const allDay = eventAllDay ? eventAllDay.checked : true;
+      const time = (!allDay && eventTime && eventTime.value) ? eventTime.value : '';
+      const repeat = eventRepeat ? eventRepeat.value : 'none';
+      let repeatUntil = '';
+      if(repeat !== 'none' && eventRepeatUntil && eventRepeatUntil.value){
+        repeatUntil = eventRepeatUntil.value;
+        if(repeatUntil < selectedISO){
+          alert('“Repeat until” must be on or after the event start date.');
+          return;
+        }
+      }
+      calendarEvents.unshift({
+        id: (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()+Math.random())),
+        title,
+        notes: eventNotes ? eventNotes.value.trim() : '',
+        date: selectedISO,
+        allDay,
+        time,
+        repeat,
+        repeatUntil,
+        createdAt: Date.now()
+      });
+      saveEvents();
+      eventForm.reset();
+      if(eventAllDay) eventAllDay.checked = true;
+      if(eventTime) eventTime.value = '09:00';
+      if(eventRepeat) eventRepeat.value = 'none';
+      if(eventRepeatUntil) eventRepeatUntil.value = '';
+      syncEventFormFields();
+      renderCalendar();
+      renderDayPanel();
+    });
+  }
+
+  if(calPrev) calPrev.addEventListener('click', () => {
+    calCursor.setMonth(calCursor.getMonth()-1);
+    renderCalendar();
+  });
+  if(calNext) calNext.addEventListener('click', () => {
+    calCursor.setMonth(calCursor.getMonth()+1);
+    renderCalendar();
+  });
+  if(calToday) calToday.addEventListener('click', () => {
+    const now = new Date();
+    calCursor = new Date(now.getFullYear(), now.getMonth(), 1);
+    selectedISO = toISO(now);
+    renderCalendar();
+    renderDayPanel();
+  });
+
+  // Keep calendar in sync when tasks change — wrap renderTasks if present
+  if(typeof renderTasks === 'function'){
+    const _rt = renderTasks;
+    window.renderTasks = function(){
+      _rt();
+      if(calendarPage && calendarPage.classList.contains('active')){
+        renderCalendar();
+        renderDayPanel();
+      }
+    };
+  }
+
+  // Ensure showMainLedger / hideAllViews still hide calendar
+  if(typeof hideAllViews === 'function'){
+    const _h = hideAllViews;
+    window.hideAllViews = function(){
+      _h();
+      if(calendarPage) calendarPage.classList.remove('active');
+    };
+  }
+
+  // Initial calendar render data ready
+  renderCalendar();
+  renderDayPanel();
+})();
+
   </script>
 </body>
 </html>
